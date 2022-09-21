@@ -1,0 +1,15 @@
+#nav-search {
+    background-color: #d8e1e7;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#header{
+    background-color: #6ebb84;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
