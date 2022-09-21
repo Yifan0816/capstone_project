@@ -1,0 +1,20 @@
+ul {
+  padding-left: 1em;
+  height: 2.25em;
+  margin-top: 0;
+  padding-top: 1em;
+  list-style-type: none;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+li {
+  color: #fff;
+  text-decoration: none;
+  display: inline;
+  padding-right: 1.45em;
+  padding-left: 0.45em;
+  cursor: pointer;
+}
