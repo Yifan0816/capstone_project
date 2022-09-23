@@ -1,0 +1,17 @@
+[
+	{
+		"ShelterName": "Best Friends Lifesaving Center",
+		"ShelterId": 1,
+		"Description": "Best Friends is working to save the lives of dogs and cats in Northwest Arkansas, and you can help. You can foster, volunteer or advocate.  And we can introduce you to your new four-legged family member or connect you with local pet-support services."
+	},
+	{
+		"ShelterName": "Humane Society",
+		"ShelterId": 2,
+		"Description": "Helping animals find loving homes since 1963."
+    },
+    {
+		"ShelterName": "Heavenly Paws Rescue",
+		"ShelterId": 3,
+		"Description": "We are not at the Gravette location. That is our home. We strictly run Heavenly Paws via phone and text. We find fur babies needing homes and we hook them up with loving families. We go to potential new homes and do home inspections, deliver the fur baby for a “try” for a few days, and then if all goes well we come back and do the adoption. All of our babies are fully vetted including spay and neuter"
+	}
+]

@@ -51,17 +51,17 @@ function getNextId(counterType) {
   // counter in the file to indicate that id was used
   let id = -1;
   switch (counterType.toLowerCase()) {
-    case "group":
-      id = data.nextGroup;
-      data.nextGroup++;
+    case "organization":
+      id = data.nextOrganization;
+      data.nextOrganization++;
       break;
-    case "member":
-      id = data.nextMember;
-      data.nextMember++;
+    case "animaltype":
+      id = data.nextAnimalType;
+      data.nextAnimalTypee++;
       break;
-    case "user":
-      id = data.nextUser;
-      data.nextUser++;
+    case "animal":
+      id = data.nextAnimal;
+      data.nextAnimal++;
       break;
   }
 
@@ -73,31 +73,27 @@ function getNextId(counterType) {
 
 // ------ Validation helpers ------------------
 
-function isValidGroup(group) {
-  if (group.GroupName == undefined || group.GroupName.trim() == "") return 1;
+function isValidAnimalType(animalType) {
+  console.log("New animal type be like" + animalType);
+  console.log("New animal type name be like" + animalType.AnimalTypeName);
   if (
-    group.OrganizationName == undefined ||
-    group.OrganizationName.trim() == ""
+    animalType.AnimalTypeName == undefined ||
+    animalType.AnimalTypeName.trim() == ""
   )
-    return 2;
-  if (group.SponsorName == undefined || group.SponsorName.trim() == "")
-    return 3;
-  if (group.SponsorPhone == undefined || group.SponsorPhone.trim() == "")
-    return 4;
-  if (group.SponsorEmail == undefined || group.SponsorEmail.trim() == "")
-    return 5;
-  if (group.MaxGroupSize == undefined || isNaN(group.MaxGroupSize)) return 6;
-
+    return 1;
   return -1;
 }
 
-function isValidMember(member) {
-  if (member.MemberEmail == undefined || member.MemberEmail.trim() == "")
+function isValidAnimal(animal) {
+  if (animal.AnimalName == undefined || animal.AnimalName.trim() == "")
     return 1;
-  if (member.MemberName == undefined || member.MemberName.trim() == "")
-    return 2;
-  if (member.MemberPhone == undefined || member.MemberPhone.trim() == "")
-    return 3;
+  if (animal.Age == undefined || animal.Age.trim() == "") return 2;
+  if (animal.Gender == undefined || animal.Gender.trim() == "") return 3;
+  if (animal.Breed == undefined || animal.Breed.trim() == "") return 4;
+  if (animal.Color == undefined || animal.Color.trim() == "") return 5;
+  if (animal.Size == undefined || animal.Size.trim() == "") return 6;
+  if (animal.Health == undefined || animal.Health.trim() == "") return 7;
+  if (animal.Charactor == undefined || animal.Charactor.trim() == "") return 8;
 
   return -1;
 }
@@ -122,10 +118,10 @@ app.get("/index.html", function (req, res) {
 /* ************************************************************************* */
 
 // GET ORGANIZATION
-app.get("/api/organizations", function (req, res) {
-  console.log("Received a GET request for all organizations");
+app.get("/api/shelters", function (req, res) {
+  console.log("Received a GET request for all shelters");
 
-  let data = fs.readFileSync(__dirname + "/data/organizations.json", "utf8");
+  let data = fs.readFileSync(__dirname + "/data/shelters.json", "utf8");
   data = JSON.parse(data);
 
   console.log("Returned data is: ");
@@ -134,10 +130,10 @@ app.get("/api/organizations", function (req, res) {
 });
 
 // GET ALL GROUPS
-app.get("/api/groups", function (req, res) {
-  console.log("Received a GET request for all groups");
+app.get("/api/animaltypes", function (req, res) {
+  console.log("Received a GET request for all animal types");
 
-  let data = fs.readFileSync(__dirname + "/data/groups.json", "utf8");
+  let data = fs.readFileSync(__dirname + "/data/animal-types.json", "utf8");
   data = JSON.parse(data);
 
   console.log("Returned data is: ");
@@ -146,14 +142,14 @@ app.get("/api/groups", function (req, res) {
 });
 
 // GET ONE GROUP BY ID
-app.get("/api/groups/:id", function (req, res) {
+app.get("/api/animaltypes/:id", function (req, res) {
   let id = req.params.id;
   console.log("Received a GET request for group " + id);
 
-  let data = fs.readFileSync(__dirname + "/data/groups.json", "utf8");
+  let data = fs.readFileSync(__dirname + "/data/animal-types.json", "utf8");
   data = JSON.parse(data);
 
-  let match = data.find((element) => element.GroupId == id);
+  let match = data.find((element) => element.AnimalTypeId == id);
   if (match == null) {
     res.status(404).send("Group Not Found");
     console.log("Group not found");
@@ -166,29 +162,27 @@ app.get("/api/groups/:id", function (req, res) {
   res.end(JSON.stringify(match));
 });
 
-// GET MANY GROUPS BY ORGANIZATION
-app.get("/api/groups/byorganization/:id", function (req, res) {
+// GET All GROUPS BY ORGANIZATION
+app.get("/api/animaltypes/byshelter/:id", function (req, res) {
   let id = req.params.id;
   console.log("Received a GET request for groups in organization " + id);
 
-  let orgData = fs.readFileSync(__dirname + "/data/organizations.json", "utf8");
+  let orgData = fs.readFileSync(__dirname + "/data/shelters.json", "utf8");
   orgData = JSON.parse(orgData);
 
-  let organization = orgData.find(
-    (element) => element.OrganizationId.toLowerCase() == id.toLowerCase()
-  );
+  let organization = orgData.find((element) => element.ShelterId == id);
   if (organization == null) {
     res.status(404).send("Organization Not Found");
     console.log("Organization not found");
     return;
   }
 
-  let data = fs.readFileSync(__dirname + "/data/groups.json", "utf8");
+  let data = fs.readFileSync(__dirname + "/data/animal-types.json", "utf8");
   data = JSON.parse(data);
 
   // find the matching groups for a specific organization
   let matches = data.filter(
-    (element) => element.OrganizationName == organization.OrganizationName
+    (element) => element.ShelterId == organization.ShelterId
   );
 
   console.log("Returned data is: ");
@@ -197,71 +191,78 @@ app.get("/api/groups/byorganization/:id", function (req, res) {
 });
 
 // GET A SPECIFIC MEMBER IN A SPECIFIC GROUP
-app.get("/api/groups/:groupid/members/:memberid", function (req, res) {
-  let groupId = req.params.groupid;
-  let memberId = req.params.memberid;
-  console.log(
-    "Received a GET request for member " + memberId + " in group " + groupId
-  );
+// Not used, not in postman
+app.get(
+  "/api/animaltypes/:animaltypeid/animals/:animalid",
+  function (req, res) {
+    let animalTypeId = req.params.animaltypeid;
+    let animalId = req.params.animalid;
+    console.log(
+      "Received a GET request for animal " +
+        animalId +
+        " in animal type " +
+        animalTypeId
+    );
 
-  let data = fs.readFileSync(__dirname + "/data/groups.json", "utf8");
-  data = JSON.parse(data);
+    let data = fs.readFileSync(__dirname + "/data/animal-types.json", "utf8");
+    data = JSON.parse(data);
 
-  // find the group
-  let matchingGroup = data.find((element) => element.GroupId == groupId);
-  if (matchingGroup == null) {
-    res.status(404).send("Group Not Found");
-    console.log("Group not found");
-    return;
+    // find the group
+    let matchingGroup = data.find(
+      (element) => element.AnimalTypeId == animalTypeId
+    );
+    if (matchingGroup == null) {
+      res.status(404).send("Animal type Not Found");
+      console.log("Animal type not found");
+      return;
+    }
+
+    // find the member
+    let match = matchingGroup.Animals.find((m) => m.AnimalId == animalId);
+    if (match == null) {
+      res.status(404).send("Member Not Found");
+      console.log("Member not found");
+      return;
+    }
+
+    console.log("Returned data is: ");
+    console.log(match);
+    res.end(JSON.stringify(match));
   }
-
-  // find the member
-  let match = matchingGroup.Members.find((m) => m.MemberId == memberId);
-  if (match == null) {
-    res.status(404).send("Member Not Found");
-    console.log("Member not found");
-    return;
-  }
-
-  console.log("Returned data is: ");
-  console.log(match);
-  res.end(JSON.stringify(match));
-});
+);
 
 // ADD A GROUP
-app.post("/api/groups", urlencodedParser, function (req, res) {
-  console.log("Received a POST request to add a group");
+// It'll have empty Animals[]
+app.post("/api/animaltypes", urlencodedParser, function (req, res) {
+  console.log("Received a POST request to add a animaltype");
   console.log("BODY -------->" + JSON.stringify(req.body));
 
   // assemble group information so we can validate it
   let group = {
-    GroupId: getNextId("group"), // assign id to group
-    GroupName: req.body.GroupName,
-    OrganizationName: req.body.OrganizationName,
-    SponsorName: req.body.SponsorName,
-    SponsorPhone: req.body.SponsorPhone,
-    SponsorEmail: req.body.SponsorEmail,
-    MaxGroupSize: Number(req.body.MaxGroupSize),
-    Members: [],
+    AnimalTypeId: getNextId("animalType"), // assign id to group
+    AnimalTypeName: req.body.AnimalTypeName,
+    ShelterId: Number(req.body.ShelterId),
+    Capacity: Number(req.body.Capacity),
+    Animals: [],
   };
 
   console.log("Performing validation...");
-  let errorCode = isValidGroup(group);
+  let errorCode = isValidAnimalType(group);
   if (errorCode != -1) {
     console.log("Invalid data found! Reason: " + errorCode);
     res.status(400).send("Bad Request - Incorrect or Missing Data");
     return;
   }
 
-  let data = fs.readFileSync(__dirname + "/data/groups.json", "utf8");
+  let data = fs.readFileSync(__dirname + "/data/animal-types.json", "utf8");
   data = JSON.parse(data);
 
   // add the group
   data.push(group);
 
-  fs.writeFileSync(__dirname + "/data/groups.json", JSON.stringify(data));
+  fs.writeFileSync(__dirname + "/data/animal-types.json", JSON.stringify(data));
 
-  console.log("Group added: ");
+  console.log("Animal type added: ");
   console.log(group);
 
   //res.status(201).send(JSON.stringify(group));
@@ -269,34 +270,37 @@ app.post("/api/groups", urlencodedParser, function (req, res) {
 });
 
 // EDIT A GROUP
-app.put("/api/groups", urlencodedParser, function (req, res) {
-  console.log("Received a PUT request to group a team");
+// Should only change capacity and animal-type in a group
+// shouldn't change shelterId, we don't move it around
+// shouldn't change animals, we do it in groups page, it's a CRUD to animals.json
+app.put("/api/animaltypes", urlencodedParser, function (req, res) {
+  console.log("Received a PUT request to edit an animaltypes");
   console.log("BODY -------->" + JSON.stringify(req.body));
 
   // assemble group information so we can validate it
   let group = {
-    GroupId: req.body.GroupId, //req.params.id if you use id in URL instead of req.body.GroupId
-    GroupName: req.body.GroupName,
-    OrganizationName: req.body.OrganizationName,
-    SponsorName: req.body.SponsorName,
-    SponsorPhone: req.body.SponsorPhone,
-    SponsorEmail: req.body.SponsorEmail,
-    MaxGroupSize: Number(req.body.MaxGroupSize),
+    AnimalTypeId: Number(req.body.AnimalTypeId),
+    AnimalTypeName: req.body.AnimalTypeName,
+    ShelterId: Number(req.body.ShelterId),
+    Capacity: Number(req.body.Capacity),
+    Animals: [],
   };
 
   console.log("Performing validation...");
-  let errorCode = isValidGroup(group);
+  let errorCode = isValidAnimalType(group);
   if (errorCode != -1) {
     console.log("Invalid data found! Reason: " + errorCode);
     res.status(400).send("Bad Request - Incorrect or Missing Data");
     return;
   }
 
-  let data = fs.readFileSync(__dirname + "/data/groups.json", "utf8");
+  let data = fs.readFileSync(__dirname + "/data/animal-types.json", "utf8");
   data = JSON.parse(data);
 
   // find the group
-  let match = data.find((element) => element.GroupId == group.GroupId);
+  let match = data.find(
+    (element) => element.AnimalTypeId == group.AnimalTypeId
+  );
   if (match == null) {
     res.status(404).send("Group Not Found");
     console.log("Group not found");
@@ -304,23 +308,20 @@ app.put("/api/groups", urlencodedParser, function (req, res) {
   }
 
   // update the group
-  match.GroupName = group.GroupName;
-  match.OrganizationName = group.OrganizationName;
-  match.SponsorName = group.SponsorName;
-  match.SponsorPhone = group.SponsorPhone;
-  match.SponsorEmail = group.SponsorEmail;
+  match.AnimalTypeName = group.AnimalTypeName;
+  match.ShelterId = group.ShelterId;
 
   // make sure new values for MaxGroupSize doesn't invalidate grooup
-  if (Number(group.MaxGroupSize) < match.Members.length) {
+  if (Number(group.Capacity) < match.Animals.length) {
     res
       .status(409)
       .send("New group size too small based on current number of members");
     console.log("New group size too small based on current number of members");
     return;
   }
-  match.MaxGroupSize = Number(group.MaxGroupSize);
+  match.Capacity = Number(group.Capacity);
 
-  fs.writeFileSync(__dirname + "/data/groups.json", JSON.stringify(data));
+  fs.writeFileSync(__dirname + "/data/animal-types.json", JSON.stringify(data));
 
   console.log("Update successful!  New values: ");
   console.log(match);
@@ -328,73 +329,167 @@ app.put("/api/groups", urlencodedParser, function (req, res) {
 });
 
 // DELETE A GROUP
-app.delete("/api/groups/:id", function (req, res) {
+app.delete("/api/animaltypes/:id", function (req, res) {
   let id = req.params.id;
-  console.log("Received a DELETE request for group " + id);
+  console.log("Received a DELETE request for animal type " + id);
 
-  let data = fs.readFileSync(__dirname + "/data/groups.json", "utf8");
+  let data = fs.readFileSync(__dirname + "/data/animal-types.json", "utf8");
   data = JSON.parse(data);
 
   // find the index number of the group in the array
-  let foundAt = data.findIndex((element) => element.GroupId == id);
+  let foundAt = data.findIndex((element) => element.AnimalTypeId == id);
 
   // delete the group if found
   if (foundAt != -1) {
     data.splice(foundAt, 1);
   }
 
-  fs.writeFileSync(__dirname + "/data/groups.json", JSON.stringify(data));
+  fs.writeFileSync(__dirname + "/data/animal-types.json", JSON.stringify(data));
 
   console.log("Delete request processed");
   // Note:  even if we didn't find the group, send a 200 because they are gone
   res.status(200).send();
 });
 
-// ADD A MEMBER TO A GROUP
-app.post("/api/groups/:id/members", urlencodedParser, function (req, res) {
+// ----------------------------------------------------------------------------
+// MEMBER MANAGEMENT
+
+// GET ALL MEMBERS
+app.get("/api/animals", function (req, res) {
+  console.log("Received a GET request for all animals");
+
+  let data = fs.readFileSync(__dirname + "/data/animals.json", "utf8");
+  data = JSON.parse(data);
+
+  console.log("Returned data is: ");
+  console.log(data);
+  res.end(JSON.stringify(data));
+});
+
+// GET ONE MEMBER BY ID
+app.get("/api/animals/:id", function (req, res) {
   let id = req.params.id;
-  console.log("Received a POST request to add a member to group " + id);
+  console.log("Received a GET request for animal " + id);
+
+  let data = fs.readFileSync(__dirname + "/data/animals.json", "utf8");
+  data = JSON.parse(data);
+
+  let match = data.find((element) => element.AnimalId == id);
+  if (match == null) {
+    res.status(404).send("Animal Not Found");
+    console.log("Animal not found");
+    return;
+  }
+
+  console.log("Returned data is: ");
+  console.log(match);
+  // logArray(match.Members);
+  res.end(JSON.stringify(match));
+});
+
+// GET All MEMBERS BY GROUP
+app.get("/api/animals/byanimaltype/:id", function (req, res) {
+  let id = req.params.id;
+  console.log("Received a GET request for groups in organization " + id);
+
+  let animalTypeData = fs.readFileSync(
+    __dirname + "/data/animal-types.json",
+    "utf8"
+  );
+  animalTypeData = JSON.parse(animalTypeData);
+
+  let animalType = animalTypeData.find((element) => element.AnimalTypeId == id);
+  if (animalType == null) {
+    res.status(404).send("Animal Type Not Found");
+    console.log("Animal Type not found");
+    return;
+  }
+
+  let arr = new Set();
+  animalType.Animals.forEach((element) => {
+    arr.add(element.AnimalId);
+    console.log("Added animalId: " + element.AnimalId);
+  });
+
+  let data = fs.readFileSync(__dirname + "/data/animals.json", "utf8");
+  data = JSON.parse(data);
+
+  // find the matching groups for a specific organization
+  let matches = data.filter((element) => arr.has(element.AnimalId));
+
+  console.log("Returned data is: ");
+  console.log(matches);
+  res.end(JSON.stringify(matches));
+});
+
+// ADD A MEMBER TO A GROUP
+app.post("/api/animaltypes/:id/animals", urlencodedParser, function (req, res) {
+  let id = req.params.id;
+  console.log("Received a POST request to add an animal to animal type " + id);
   console.log("BODY -------->" + JSON.stringify(req.body));
 
   // assemble member information so we can validate it
   let member = {
-    MemberId: getNextId("member"), // assign new id
-    MemberEmail: req.body.MemberEmail,
-    MemberName: req.body.MemberName,
-    MemberPhone: req.body.MemberPhone,
+    AnimalId: getNextId("animal"), // assign new id
+    AnimalName: req.body.AnimalName,
+    Age: req.body.Age,
+    Gender: req.body.Gender,
+    Breed: req.body.Breed,
+    Color: req.body.Color,
+    Size: req.body.Size,
+    Health: req.body.Health,
+    Charactor: req.body.Charactor,
+    WithCats: req.body.WithCats,
+    WithDogs: req.body.WithDogs,
+    WithChildren: req.body.WithChildren,
   };
 
   console.log("Performing member validation...");
-  let errorCode = isValidMember(member);
+  let errorCode = isValidAnimal(member);
   if (errorCode != -1) {
     console.log("Invalid data found! Reason: " + errorCode);
     res.status(400).send("Bad Request - Incorrect or Missing Data");
     return;
   }
 
-  let data = fs.readFileSync(__dirname + "/data/groups.json", "utf8");
+  // STEP 1 Add animal to crossbounding animal-type
+  let data = fs.readFileSync(__dirname + "/data/animal-types.json", "utf8");
   data = JSON.parse(data);
 
   // find the group
-  let match = data.find((element) => element.GroupId == id);
+  let match = data.find((element) => element.AnimalTypeId == id);
   if (match == null) {
     res.status(404).send("Group Not Found");
     console.log("Group not found");
     return;
   }
 
-  if (match.Members.length == match.MaxGroupSize) {
-    res.status(409).send("Member not added - group at capacity");
-    console.log("Member not added - group at capacity");
+  if (match.Animals.length == match.Capacity) {
+    res.status(409).send("Animal not added - animal type at capacity");
+    console.log("Animal not added - animal type at capacity");
     return;
   }
 
   // add the member
-  match.Members.push(member);
+  match.Animals.push({ AnimalId: member.AnimalId });
 
-  fs.writeFileSync(__dirname + "/data/groups.json", JSON.stringify(data));
+  fs.writeFileSync(__dirname + "/data/animal-types.json", JSON.stringify(data));
 
-  console.log("New member added!");
+  console.log("New animal added to animal type: " + id);
+
+  // STEP 2 Add animal to animals
+  let animalsData = fs.readFileSync(__dirname + "/data/animals.json", "utf8");
+  animalsData = JSON.parse(animalsData);
+
+  // add the group
+  animalsData.push(member);
+
+  fs.writeFileSync(
+    __dirname + "/data/animals.json",
+    JSON.stringify(animalsData)
+  );
+
+  console.log("New animal added to animals!");
   console.log(member);
 
   //res.status(201).send(JSON.stringify(member));
@@ -402,77 +497,88 @@ app.post("/api/groups/:id/members", urlencodedParser, function (req, res) {
 });
 
 // EDIT A MEMBER IN A GROUP
-app.put("/api/groups/:id/members", urlencodedParser, function (req, res) {
+// should only be able to edit animal, not animal types
+app.put("/api/animaltypes/:id/animals", urlencodedParser, function (req, res) {
   let id = req.params.id;
-  console.log("Received a PUT request to edit a member in group " + id);
+  console.log("Received a PUT request to edit a animal in animal type " + id);
   console.log("BODY -------->" + JSON.stringify(req.body));
 
   // assemble member information so we can validate it
   let member = {
-    MemberId: req.body.MemberId,
-    MemberEmail: req.body.MemberEmail,
-    MemberName: req.body.MemberName,
-    MemberPhone: req.body.MemberPhone,
+    AnimalId: req.body.AnimalId,
+    AnimalName: req.body.AnimalName,
+    Age: req.body.Age,
+    Gender: req.body.Gender,
+    Breed: req.body.Breed,
+    Color: req.body.Color,
+    Size: req.body.Size,
+    Health: req.body.Health,
+    Charactor: req.body.Charactor,
+    WithCats: req.body.WithCats,
+    WithDogs: req.body.WithDogs,
+    WithChildren: req.body.WithChildren,
   };
 
   console.log("Performing member validation...");
-  let errorCode = isValidMember(member);
+  let errorCode = isValidAnimal(member);
   if (errorCode != -1) {
     console.log("Invalid data found! Reason: " + errorCode);
     res.status(400).send("Bad Request - Incorrect or Missing Data");
     return;
   }
 
-  // find the group
-  let data = fs.readFileSync(__dirname + "/data/groups.json", "utf8");
+  // load all members
+  let data = fs.readFileSync(__dirname + "/data/animals.json", "utf8");
   data = JSON.parse(data);
 
-  // find the group
-  let matchingGroup = data.find((element) => element.GroupId == id);
-  if (matchingGroup == null) {
-    res.status(404).send("Group Not Found");
-    return;
-  }
-
-  // find the member
-  let match = matchingGroup.Members.find(
-    (m) => m.MemberId == req.body.MemberId
-  );
+  let match = data.find((element) => element.AnimalId == member.AnimalId);
   if (match == null) {
-    res.status(404).send("Member Not Found");
+    res.status(404).send("Animal Not Found");
+    console.log("Animal not found");
     return;
   }
 
   // update the member
-  match.MemberEmail = req.body.MemberEmail;
-  match.MemberName = req.body.MemberName;
-  match.MemberPhone = req.body.MemberPhone;
+  match.AnimalName = req.body.AnimalName;
+  match.Age = req.body.Age;
+  match.Gender = req.body.Gender;
+  match.Breed = req.body.Breed;
+  match.Color = req.body.Color;
+  match.Size = req.body.Size;
+  match.Health = req.body.Health;
+  match.Charactor = req.body.Charactor;
+  match.WithCats = req.body.WithCats;
+  match.WithDogs = req.body.WithDogs;
+  match.WithChildren = req.body.WithChildren;
 
-  fs.writeFileSync(__dirname + "/data/groups.json", JSON.stringify(data));
+  fs.writeFileSync(__dirname + "/data/animals.json", JSON.stringify(data));
 
-  console.log("Member updated!");
+  console.log("Animal updated!");
   res.status(200).send();
 });
 
 // DELETE A MEMBER IN A GROUP
 app.delete(
-  "/api/groups/:groupid/members/:memberid",
+  "/api/animaltypes/:animaltypeid/animals/:animalid",
   urlencodedParser,
   function (req, res) {
-    let groupId = req.params.groupid;
-    let memberId = req.params.memberid;
+    let animalTypeId = req.params.animaltypeid;
+    let animalId = req.params.animalid;
     console.log(
-      "Received a DELETE request for member " +
-        memberId +
-        " in group " +
-        groupId
+      "Received a DELETE request for animal " +
+        animalId +
+        " in animal type " +
+        animalTypeId
     );
 
+    // Step 1 Delete from associated animal types
     // find the group
-    let data = fs.readFileSync(__dirname + "/data/groups.json", "utf8");
+    let data = fs.readFileSync(__dirname + "/data/animal-types.json", "utf8");
     data = JSON.parse(data);
 
-    let matchingGroup = data.find((element) => element.GroupId == groupId);
+    let matchingGroup = data.find(
+      (element) => element.AnimalTypeId == animalTypeId
+    );
     if (matchingGroup == null) {
       res.status(404).send("Group Not Found");
       console.log("Group not found");
@@ -480,123 +586,48 @@ app.delete(
     }
 
     // find the member
-    let foundAt = matchingGroup.Members.findIndex(
-      (m) => m.MemberId == memberId
+    let foundAt = matchingGroup.Animals.findIndex(
+      (m) => m.AnimalId == animalId
     );
 
     // delete the member if found
     if (foundAt != -1) {
-      matchingGroup.Members.splice(foundAt, 1);
+      matchingGroup.Animals.splice(foundAt, 1);
     }
 
-    fs.writeFileSync(__dirname + "/data/groups.json", JSON.stringify(data));
+    fs.writeFileSync(
+      __dirname + "/data/animal-types.json",
+      JSON.stringify(data)
+    );
+    console.log(
+      "Delete animal: " + animalId + " from animal type: " + animalTypeId
+    );
+
+    // STEP 2, delete from animals
+    let animalData = fs.readFileSync(__dirname + "/data/animals.json", "utf8");
+    animalData = JSON.parse(animalData);
+
+    // find the index number of the group in the array
+    let foundAinmalAt = animalData.findIndex(
+      (element) => element.AnimalId == animalId
+    );
+
+    // delete the group if found
+    if (foundAinmalAt != -1) {
+      animalData.splice(foundAinmalAt, 1);
+    }
+
+    fs.writeFileSync(
+      __dirname + "/data/animals.json",
+      JSON.stringify(animalData)
+    );
+    console.log("Delete animal: " + animalId + " from animals");
 
     console.log("Delete request processed");
     // Note:  even if we didn't find them, send a 200 back because they are gone
     res.status(200).send();
   }
 );
-
-// ----------------------------------------------------------------------------
-// USER MANAGEMENT
-
-// GET request to check if user name is available
-app.get("/api/username_available/:username", function (req, res) {
-  let username = req.params.username;
-  console.log("Checking to see if this username " + username + " is available");
-
-  let data = fs.readFileSync(__dirname + "/data/users.json", "utf8");
-  data = JSON.parse(data);
-
-  let matchingUser = data.find(
-    (user) => user.username.toLowerCase() == username.toLowerCase()
-  );
-
-  let message;
-  if (matchingUser == null) {
-    message = "YES";
-  } else {
-    message = "NO";
-  }
-
-  console.log("Is user name available? " + message);
-  res.end(message);
-});
-
-// POST request to add a user
-app.post("/api/users", urlencodedParser, function (req, res) {
-  console.log("Got a POST request to add a user");
-  console.log("BODY -------->" + JSON.stringify(req.body));
-
-  let data = fs.readFileSync(__dirname + "/data/users.json", "utf8");
-  data = JSON.parse(data);
-
-  // check for duplicate username
-  let matchingUser = data.find(
-    (user) => user.username.toLowerCase() == req.body.username.toLowerCase()
-  );
-  if (matchingUser != null) {
-    // username already exists
-    console.log("ERROR: username already exists!");
-    res.status(403).send(); // forbidden - 403 has no message; programmers should
-    // have used GET /api/username_available/:username to see if
-    // if user registration would have worked
-
-    return;
-  }
-
-  let user = {
-    id: getNextId("user"), // assign new id
-    name: req.body.name,
-    username: req.body.username,
-    password: req.body.password,
-  };
-
-  data.push(user);
-
-  fs.writeFileSync(__dirname + "/data/users.json", JSON.stringify(data));
-
-  console.log("New user added!");
-  console.log(user);
-  res.status(200).send();
-});
-
-// POST request to login -- sent username and password in request body
-app.post("/api/login", urlencodedParser, function (req, res) {
-  console.log("Got a POST request for a user to login");
-  console.log("BODY -------->" + JSON.stringify(req.body));
-
-  let data = fs.readFileSync(__dirname + "/data/users.json", "utf8");
-  data = JSON.parse(data);
-
-  // check to see if credentials match a user
-  let match = data.find(
-    (user) =>
-      user.username.toLowerCase() == req.body.username.toLowerCase() &&
-      user.password == req.body.password
-  );
-
-  if (match == null) {
-    // credentials don't match any user
-    console.log("Error:  credentials don't match known user");
-    res.status(403).send(); // forbidden
-    return;
-  }
-
-  let user = {
-    id: match.id,
-    name: match.name,
-    username: match.username,
-  };
-
-  // login successful - return user w/o password
-  console.log("Login successful for: ");
-  console.log(user);
-  res.end(JSON.stringify(user));
-});
-
-// ------------------------------------------------------------------------------
-// SITE SET-UP
 
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: false }));
