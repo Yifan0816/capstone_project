@@ -1,4 +1,5 @@
-app-root {
-    height: 100%;
+body {
     margin: 0;
+    padding: 0;
+    background-color:#8bb78d;
 }

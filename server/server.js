@@ -129,6 +129,27 @@ app.get("/api/shelters", function (req, res) {
   res.end(JSON.stringify(data));
 });
 
+// GET ONE ORGANIZATION BY ID
+app.get("/api/shelters/:id", function (req, res) {
+  let id = req.params.id;
+  console.log("Received a GET request for shelter " + id);
+
+  let data = fs.readFileSync(__dirname + "/data/shelters.json", "utf8");
+  data = JSON.parse(data);
+
+  let match = data.find((element) => element.ShelterId == id);
+  if (match == null) {
+    res.status(404).send("Shelter Not Found");
+    console.log("Shelter not found");
+    return;
+  }
+
+  console.log("Returned data is: ");
+  console.log(match);
+  // logArray(match.Members);
+  res.end(JSON.stringify(match));
+})
+
 // GET ALL GROUPS
 app.get("/api/animaltypes", function (req, res) {
   console.log("Received a GET request for all animal types");

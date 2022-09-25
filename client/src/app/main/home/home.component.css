@@ -33,7 +33,9 @@
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
+    flex-basis: 33.33%;
 }
+
 
 #organizationIcons p, #organizationIcons h3  {
 

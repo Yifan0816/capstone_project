@@ -1,0 +1,60 @@
+div {
+  display: flex;
+  flex-direction: row;
+}
+
+#orgDetails {
+  padding-top: 5%;
+  padding-bottom: 40%;
+  padding-left: 2em;
+  padding-right: 2em;
+  flex-basis: 35%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+:host ::ng-deep .prime-card-override {
+  margin: 1em;
+}
+
+:host ::ng-deep .p-card-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 1em;
+
+}
+
+:host ::ng-deep .p-button {
+    background-color: aliceblue;
+    color: var(--green-400);
+    border-color: var(--gray-400);
+}
+
+:host ::ng-deep .p-card-content {
+    display: flex;
+    justify-content: space-between;
+
+
+}
+
+:host ::ng-deep .p-card-content .progressGroup {
+    display: flex;
+    flex-direction: column;
+
+}
+
+
+h3 {
+    margin: 0;
+}
+:host ::ng-deep .prime-progress {
+    /* TODO width need to be fixed here */
+    width: 40em;
+    /* flex-basis: 50%; */
+}
+
+:host ::ng-deep .avalBtn {
+    margin-left: 2em;
+}
