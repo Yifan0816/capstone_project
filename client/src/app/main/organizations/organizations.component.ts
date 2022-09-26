@@ -34,18 +34,6 @@ export class OrganizationsComponent implements OnInit {
   animalType!: Animaltype;
   isDeleting = false;
 
-  toggleDeletionDialog(): void {
-    this.isDeleting = !this.isDeleting;
-  }
-
-  toggleEditingState(): void {
-    this.isEditing = !this.isEditing;
-  }
-
-  toggleAddingNewType(): void {
-    this.isAddNewAnimalType = !this.isAddNewAnimalType;
-  }
-
   creatAnimalTypeForm() {
     this.animalTypeForm = this.fb.group({
       AnimalTypeId: [''],
@@ -55,8 +43,22 @@ export class OrganizationsComponent implements OnInit {
     });
   }
 
-  // TODO when update a animalType, when only name is updated, Capacity should copy from old, currently need both name and cap to be entered.
-  // When hit Edit button, only that card should be under edit, currently all cards went to edit, but only the one will be edited
+  toggleDeletionDialog(): void {
+    this.isDeleting = !this.isDeleting;
+  }
+
+  toggleEditingState(animalTypeId: number): void {
+    this.isEditing = !this.isEditing;
+    this.getAnimalType(animalTypeId);
+
+  }
+
+  toggleAddingNewType(): void {
+    this.isAddNewAnimalType = !this.isAddNewAnimalType;
+    this.animalTypeForm.reset();
+  }
+
+  // When hit Edit button, only that card should be under edit, currently all cards went to edit
   deleteAnimalType(animalTypeId: number): void {
     this.isEditing = !this.isEditing;
     console.log('deleteAnimalType() called');
@@ -66,41 +68,38 @@ export class OrganizationsComponent implements OnInit {
     });
   }
 
+  getAnimalType(animalTypeId: number): void {
+    this.groupService.getAnimalTypeById(animalTypeId).subscribe({
+      next: (animalType) => this.setRetrievedToForm(animalType),
+      error: (error) => console.log(error),
+      complete: () => console.log(`getAnimalType() called`),
+    });
+  }
+
+  setRetrievedToForm(animalType: Animaltype): void {
+    this.animalType = animalType;
+    this.animalTypeForm.setValue({
+      AnimalTypeId: this.animalType.AnimalTypeId,
+      AnimalTypeName: this.animalType.AnimalTypeName,
+      Capacity: this.animalType.Capacity,
+      Animals: this.animalType.Animals,
+    });
+  }
+
   submitAnimalType(animalType: Animaltype, animalTypeId: number): void {
-    animalType.AnimalTypeId = animalTypeId;
     animalType.ShelterId = parseInt(
       this.activatedRoute.snapshot.paramMap.get('id')!
     );
-    console.log(`submitAnimalType() called`);
-    console.log(animalType);
-
-    console.log('New Animal Type id be like: ' + animalType.AnimalTypeId);
+    if (this.animalTypeForm.invalid) {
+      console.log(`submitAnimalType: this.animalTypeForm.invalid = true`);
+      return;
+    }
     if (animalType.AnimalTypeId === null || animalType.AnimalTypeId < 1 ) {
-      if (this.animalTypeForm.invalid) {
-        console.log(`submitAnimalType: this.animalTypeForm.invalid = true`);
-        return;
-      }
       this.addAnimalType(animalType);
-      console.log('addAnimalType() called');
       // what's the difference between reload here and reload on completion
       window.location.reload();
     }
     else {
-      console.log("new entered aminal cap: " + animalType.Capacity);
-      console.log("new entered aminal cap type: " + typeof animalType.Capacity);
-      this.groupService.getAnimalTypeById(animalType.AnimalTypeId).subscribe({
-        next: (oldAnimalType) => {
-          animalType.AnimalTypeId = oldAnimalType.AnimalTypeId;
-          animalType.ShelterId = oldAnimalType.ShelterId;
-          animalType.Animals = oldAnimalType.Animals;
-          console.log("Copying old animal other stuff");
-          if(animalType.Capacity === null || animalType.Capacity === parseInt('')) {
-            animalType.Capacity = oldAnimalType.Capacity;
-            console.log("Copying old animal cap");
-          }
-        },
-      });
-      console.log('updated animal type be like: ' + animalType);
       this.updateAnimalType(animalType);
       window.location.reload();
     }
@@ -118,7 +117,9 @@ export class OrganizationsComponent implements OnInit {
     });
   }
 
-
+  calProgressBar(animalsLength: number, capacity: number): number {
+    return animalsLength / capacity * 100;
+  }
 
   ngOnInit(): void {
     this.id = this.activatedRoute.snapshot.paramMap.get('id');

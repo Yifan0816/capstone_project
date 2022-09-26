@@ -5,10 +5,12 @@
         <img src="../assets/shelters/{{ id }}.jpg" alt="">
         <h2>{{ shelter.ShelterName }}</h2>
         <p>{{ shelter.Description }}</p>
-        <p-button label="Add New Animal Type" (onClick)="isAddNewAnimalType = !isAddNewAnimalType"></p-button>
+        <p-button label="Add New Animal Type" (onClick)="toggleAddingNewType()"></p-button>
     </section>
 
     <section id="groupCards" *ngIf="!isAnimalTypesLoading">
+
+        <!-- Add new card view -->
         <form [formGroup]="animalTypeForm" novalidate>
             <p-card *ngIf="isAddNewAnimalType" styleClass="prime-card-override">
                 <ng-template pTemplate="header">
@@ -32,27 +34,31 @@
             </p-card>
         </form>
 
+        <!-- Lsit of existing cards -->
         <form [formGroup]="animalTypeForm" novalidate>
             <p-card *ngFor="let animalType of animalTypes" styleClass="prime-card-override">
                 <ng-template pTemplate="header">
+
                     <h2 *ngIf="!isEditing">{{animalType.AnimalTypeName}}</h2>
-                    <input *ngIf="isEditing" type="text" pInputText placeholder="{{animalType.AnimalTypeName}}" formControlName="AnimalTypeName"/>
+                    <input *ngIf="isEditing" type="text" pInputText value="{{animalType?.AnimalTypeName}}" formControlName="AnimalTypeName"/>
+
                     <div>
-                        <p-button *ngIf="!isEditing" label="Edit" (onClick)="isEditing = !isEditing"></p-button>
+                        <p-button *ngIf="!isEditing" label="Edit" (onClick)="toggleEditingState(animalType.AnimalTypeId)"></p-button>
+
                         <p-button *ngIf="isEditing" label="Save" (onClick)="submitAnimalType(animalTypeForm.value, animalType.AnimalTypeId)"></p-button>
                         <p-button *ngIf="isEditing" label="Delete" (onClick)="toggleDeletionDialog()"></p-button>
                         <button type="button" *ngIf="isEditing" class="pi pi-times"
-                            (click)="toggleEditingState()"></button>
+                            (click)="isEditing = !isEditing"></button>
+
                     </div>
                 </ng-template>
 
                 <ng-template pTemplate="content">
                     <div class="progressGroup">
-                        <input *ngIf="isEditing" type="text" pInputText
-                            placeholder="Change Current Capacity: {{animalType.Capacity}}" formControlName="Capacity" />
+                        <input *ngIf="isEditing" type="text" pInputText value="{{animalType?.Capacity}}" formControlName="Capacity" />
                         <h3>Occupancy of {{animalType.AnimalTypeName}}</h3>
                         <!-- TODO databing the length of Animals Array in here and do the math  -->
-                        <p-progressBar value="60" styleClass="prime-progress"></p-progressBar>
+                        <p-progressBar value="{{calProgressBar(animalType.Animals.length, animalType.Capacity)}}"styleClass="prime-progress"></p-progressBar>
                     </div>
                     <!-- TODO instead of do ngIf, do visibility:none in CSS so it doesn't mess up the card layout -->
                     <!-- {!IF(isEditing,'hideButton', 'avalBtn')} -->
@@ -60,6 +66,7 @@
                     <p-button label="See Avaliable Animals!" styleClass="avalBtn"></p-button>
                 </ng-template>
 
+                <!-- Dialog on delete button -->
                 <p-dialog [(visible)]="isDeleting" [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
                     [style]="{width: '50vw'}">
                     <ng-template pTemplate="header">
@@ -68,7 +75,7 @@
                     <ng-template pTemplate="content">
                         <h2> {{animalType.AnimalTypeName}}</h2>
                         <h3>Occupancy of {{animalType.AnimalTypeName}}</h3>
-                        <p-progressBar value="60" styleClass="prime-progress"></p-progressBar>
+                        <p-progressBar value="{{calProgressBar(animalType.Animals.length, animalType.Capacity)}}" styleClass="prime-progress"></p-progressBar>
                     </ng-template>
                     <ng-template pTemplate="footer">
                         <p-button label="Yes" (onClick)="deleteAnimalType(animalType.AnimalTypeId)"></p-button>
