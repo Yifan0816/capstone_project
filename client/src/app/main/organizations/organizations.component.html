@@ -9,47 +9,71 @@
     </section>
 
     <section id="groupCards" *ngIf="!isAnimalTypesLoading">
-        <p-card *ngIf="isAddNewAnimalType" styleClass="prime-card-override">
-            <ng-template pTemplate="header">
-                <input type="text" pInputText placeholder="Enter Animal Type" />
-                <div>
-                    <p-button label="Save" (onClick)="addAnimalType()">
-                    </p-button>
-                    <p-button label="Cancel" (onClick)="cancelAddingNewType()"></p-button>
-                </div>
-            </ng-template>
+        <form [formGroup]="animalTypeForm" novalidate>
+            <p-card *ngIf="isAddNewAnimalType" styleClass="prime-card-override">
 
-            <ng-template pTemplate="content">
-                <div class="progressGroup">
-                    <input type="text" pInputText placeholder="Enter Capacity" />
-                    <h3>Fullness of facility</h3>
-                    <p-progressBar value="0" styleClass="prime-progress"></p-progressBar>
-                </div>
-            </ng-template>
-        </p-card>
+                <ng-template pTemplate="header">
+                    <input type="text" pInputText placeholder="Enter Animal Type" formControlName="AnimalTypeName"
+                        value="{{animalType?.AnimalTypeName}}" />
+                    <div>
+                        <p-button label="Save" (onClick)="submitAnimalType(animalTypeForm.value)">
+                        </p-button>
+                        <p-button label="Cancel" (onClick)="cancelAddingNewType()"></p-button>
+                    </div>
+                </ng-template>
 
+                <ng-template pTemplate="content">
+                    <div class="progressGroup">
+                        <input type="text" pInputText placeholder="Enter Capacity" formControlName="Capacity"
+                            value="{{animalType?.Capacity}}" />
+                        <h3>Fullness of facility</h3>
+                        <p-progressBar value="0" styleClass="prime-progress"></p-progressBar>
+                    </div>
+                </ng-template>
+
+            </p-card>
+        </form>
         <p-card *ngFor="let animalType of animalTypes" styleClass="prime-card-override">
             <ng-template pTemplate="header">
                 <h2 *ngIf="!isEditing">{{animalType.AnimalTypeName}}</h2>
                 <input *ngIf="isEditing" type="text" pInputText placeholder="{{animalType.AnimalTypeName}}" />
                 <div>
                     <p-button *ngIf="!isEditing" label="Edit" (onClick)="isEditing = !isEditing"></p-button>
-                    <p-button *ngIf="isEditing" label="Save" (onClick)="updateAnimalType(animalType.AnimalTypeId)">
+                    <p-button *ngIf="isEditing" label="Save" (onClick)="submitAnimalType(animalTypeForm.value)">
                     </p-button>
-                    <p-button *ngIf="isEditing" label="Delete" (onClick)="cancelEditing()"></p-button>
+                    <!-- (onClick)="deleteAnimalType(animalType.AnimalTypeId) -->
+                    <p-button *ngIf="isEditing" label="Delete" (onClick)="toggleDeletionDialog()"></p-button>
                 </div>
             </ng-template>
 
             <ng-template pTemplate="content">
                 <div class="progressGroup">
-                    <input *ngIf="isEditing" type="text" pInputText placeholder="Change Current Capacity: {{animalType.Capacity}}" />
+                    <input *ngIf="isEditing" type="text" pInputText
+                        placeholder="Change Current Capacity: {{animalType.Capacity}}" />
                     <h3>Fullness of facility</h3>
                     <!-- TODO databing the length of Animals Array in here and do the math  -->
                     <p-progressBar value="60" styleClass="prime-progress"></p-progressBar>
                 </div>
                 <!-- TODO instead of do ngIf, do visibility:none in CSS so it doesn't mess up the card layout -->
-                <p-button *ngIf="!isEditing" label="See Avaliable Animals!" styleClass="avalBtn"></p-button>
+                <!-- {!IF(isEditing,'hideButton', 'avalBtn')} -->
+                <!-- interpolation or ternary don't work with styleClass, dunno why -->
+                <p-button label="See Avaliable Animals!" styleClass="avalBtn"></p-button>
             </ng-template>
+
+            <p-dialog [(visible)]="confirmDelete" [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
+                [style]="{width: '50vw'}">
+
+                <ng-template pTemplate="header">
+                    Are you sure you want to delete {{animalType.AnimalTypeName}} ?
+                </ng-template>
+                Content
+                <ng-template pTemplate="footer">
+                    <p-button label="Yes" (onClick)="deleteAnimalType(animalType.AnimalTypeId)"></p-button>
+                    <p-button label="No" (onClick)="toggleDeletionDialog()"></p-button>
+                </ng-template>
+            </p-dialog>
         </p-card>
     </section>
+
+
 </div>

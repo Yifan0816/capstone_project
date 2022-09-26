@@ -5,6 +5,8 @@ import {CardModule} from 'primeng/card';
 import {ButtonModule} from 'primeng/button';
 import {ProgressBarModule} from 'primeng/progressbar';
 import {InputTextModule} from 'primeng/inputtext';
+import {DialogModule} from 'primeng/dialog';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -16,6 +18,7 @@ import { SearchComponent } from './header/search/search.component';
 import { HomeComponent } from './main/home/home.component';
 import { OrganizationsComponent } from './main/organizations/organizations.component';
 import { GroupsComponent } from './main/groups/groups.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -36,7 +39,11 @@ import { GroupsComponent } from './main/groups/groups.component';
     CardModule,
     ButtonModule,
     ProgressBarModule,
-    InputTextModule
+    InputTextModule,
+    FormsModule,
+    ReactiveFormsModule,
+    DialogModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

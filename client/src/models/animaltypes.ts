@@ -1,4 +1,4 @@
-export interface Animaltypes {
+export interface Animaltype {
     AnimalTypeId: number,
     AnimalTypeName: string,
     ShelterId: number,

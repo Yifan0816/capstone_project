@@ -57,7 +57,7 @@ function getNextId(counterType) {
       break;
     case "animaltype":
       id = data.nextAnimalType;
-      data.nextAnimalTypee++;
+      data.nextAnimalType++;
       break;
     case "animal":
       id = data.nextAnimal;

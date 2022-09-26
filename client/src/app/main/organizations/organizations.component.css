@@ -58,3 +58,7 @@ h3 {
 :host ::ng-deep .avalBtn {
     margin-left: 2em;
 }
+
+:host ::ng-deep .hideButton {
+    visibility: none;
+}
