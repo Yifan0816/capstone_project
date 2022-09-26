@@ -24,7 +24,7 @@ app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Methods", "PUT, POST, GET, DELETE, OPTIONS");
   // allow preflight
   if (req.method === "OPTIONS") {
-    res.send(200);
+    res.sendStatus(200);
   } else {
     next();
   }

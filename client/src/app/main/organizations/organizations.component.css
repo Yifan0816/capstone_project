@@ -30,6 +30,7 @@ div {
     background-color: aliceblue;
     color: var(--green-400);
     border-color: var(--gray-400);
+    margin-left: 1em;
 }
 
 :host ::ng-deep .p-card-content {

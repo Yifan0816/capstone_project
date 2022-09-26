@@ -32,15 +32,18 @@ export class OrganizationsComponent implements OnInit {
   style!: string;
   animalTypeForm!: FormGroup;
   animalType!: Animaltype;
-  confirmDelete = false;
-
-  confirmDeletion(animalType: Animaltype): void {
-    console.log('confirmDeletion() called, dialog should be visible');
-    this.toggleDeletionDialog();
-  }
+  isDeleting = false;
 
   toggleDeletionDialog(): void {
-    this.confirmDelete = !this.confirmDelete;
+    this.isDeleting = !this.isDeleting;
+  }
+
+  toggleEditingState(): void {
+    this.isEditing = !this.isEditing;
+  }
+
+  toggleAddingNewType(): void {
+    this.isAddNewAnimalType = !this.isAddNewAnimalType;
   }
 
   creatAnimalTypeForm() {
@@ -52,13 +55,8 @@ export class OrganizationsComponent implements OnInit {
     });
   }
 
-  // getStyleForAvaliableBtn(isEditing: boolean): string {
-  //   return isEditing ? 'hideButton' : 'avalBtn';
-  // }
-
-  // TODO finish dialog details
-  // TODO update a animalType
-  // When hit Edit button, only that card should be under edit, currently all cards went to edit
+  // TODO when update a animalType, when only name is updated, Capacity should copy from old, currently need both name and cap to be entered.
+  // When hit Edit button, only that card should be under edit, currently all cards went to edit, but only the one will be edited
   deleteAnimalType(animalTypeId: number): void {
     this.isEditing = !this.isEditing;
     console.log('deleteAnimalType() called');
@@ -68,43 +66,43 @@ export class OrganizationsComponent implements OnInit {
     });
   }
 
-  // updateAnimalType(animalTypeId: number): void {
-  //   this.isEditing = !this.isEditing;
-  // }
-
-  submitAnimalType(animalType: Animaltype): void {
-    this.isAddNewAnimalType = !this.isAddNewAnimalType;
+  submitAnimalType(animalType: Animaltype, animalTypeId: number): void {
+    animalType.AnimalTypeId = animalTypeId;
     animalType.ShelterId = parseInt(
       this.activatedRoute.snapshot.paramMap.get('id')!
     );
     console.log(`submitAnimalType() called`);
     console.log(animalType);
-    if (this.animalTypeForm.invalid) {
-      console.log(`submitAnimalType: this.animalTypeForm.invalid = true`);
-      return;
-    }
-    //insert
+
     console.log('New Animal Type id be like: ' + animalType.AnimalTypeId);
-    if (animalType.AnimalTypeId === null || animalType.AnimalTypeId < 1) {
+    if (animalType.AnimalTypeId === null || animalType.AnimalTypeId < 1 ) {
+      if (this.animalTypeForm.invalid) {
+        console.log(`submitAnimalType: this.animalTypeForm.invalid = true`);
+        return;
+      }
       this.addAnimalType(animalType);
       console.log('addAnimalType() called');
       // what's the difference between reload here and reload on completion
       window.location.reload();
     }
-    //update
     else {
-      // let oldAnimalType: Animaltype;
-      console.log('before copying from old animal type' + animalType);
+      console.log("new entered aminal cap: " + animalType.Capacity);
+      console.log("new entered aminal cap type: " + typeof animalType.Capacity);
       this.groupService.getAnimalTypeById(animalType.AnimalTypeId).subscribe({
         next: (oldAnimalType) => {
           animalType.AnimalTypeId = oldAnimalType.AnimalTypeId;
           animalType.ShelterId = oldAnimalType.ShelterId;
           animalType.Animals = oldAnimalType.Animals;
+          console.log("Copying old animal other stuff");
+          if(animalType.Capacity === null || animalType.Capacity === parseInt('')) {
+            animalType.Capacity = oldAnimalType.Capacity;
+            console.log("Copying old animal cap");
+          }
         },
       });
       console.log('updated animal type be like: ' + animalType);
       this.updateAnimalType(animalType);
-      // window.location.reload();
+      window.location.reload();
     }
   }
 
@@ -120,9 +118,7 @@ export class OrganizationsComponent implements OnInit {
     });
   }
 
-  cancelAddingNewType(): void {
-    this.isAddNewAnimalType = !this.isAddNewAnimalType;
-  }
+
 
   ngOnInit(): void {
     this.id = this.activatedRoute.snapshot.paramMap.get('id');
