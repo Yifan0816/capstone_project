@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { GroupsService } from 'src/app/service/groups.service';
 import { OrganizationsService } from 'src/app/service/organizations.service';
 import { Animaltype } from 'src/models/animaltypes';
@@ -26,13 +26,19 @@ export class OrganizationsComponent implements OnInit {
   errorMessage!: string;
   isSheltersLoading = true;
   isAnimalTypesLoading = true;
-  animalTypes!: Animaltype[];
+
   isEditing = false;
   isAddNewAnimalType = false;
-  style!: string;
+  isDeleting = false;
+
   animalTypeForm!: FormGroup;
   animalType!: Animaltype;
-  isDeleting = false;
+  animalTypes!: Animaltype[];
+
+
+  getRoute(animalTypeId: number) {
+    return `animaltypes/${animalTypeId}`;
+  }
 
   creatAnimalTypeForm() {
     this.animalTypeForm = this.fb.group({
@@ -48,6 +54,7 @@ export class OrganizationsComponent implements OnInit {
   }
 
   toggleEditingState(animalTypeId: number): void {
+    console.log("editing animal type id: "+animalTypeId);
     this.isEditing = !this.isEditing;
     this.getAnimalType(animalTypeId);
 

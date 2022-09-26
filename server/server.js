@@ -519,9 +519,9 @@ app.post("/api/animaltypes/:id/animals", urlencodedParser, function (req, res) {
 
 // EDIT A MEMBER IN A GROUP
 // should only be able to edit animal, not animal types
-app.put("/api/animaltypes/:id/animals", urlencodedParser, function (req, res) {
-  let id = req.params.id;
-  console.log("Received a PUT request to edit a animal in animal type " + id);
+app.put("/api/animals", urlencodedParser, function (req, res) {
+
+
   console.log("BODY -------->" + JSON.stringify(req.body));
 
   // assemble member information so we can validate it

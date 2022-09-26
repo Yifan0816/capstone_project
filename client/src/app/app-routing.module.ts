@@ -9,7 +9,7 @@ const fallbackRoute: Route = { path: '**', component: HomeComponent };
 const routes: Routes = [
   {path:'home', component:HomeComponent},
   {path:'shelters/:id', component:OrganizationsComponent},
-  {path:'animaltypes/:id', component:GroupsComponent},
+  {path:'shelters/:id/animaltypes/:id', component:GroupsComponent},
   fallbackRoute
 ];
 

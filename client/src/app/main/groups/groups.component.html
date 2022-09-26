@@ -1,1 +1,10 @@
-<p>groups works!</p>
+<div>
+    <section id="animalTypeDetails" *ngIf="!isAnimalTypeLoading">
+        <img src="../assets/shelters/{{ animalTypeId }}.jpg" alt="">
+        <h2>{{ animalType.AnimalTypeName}}</h2>
+        <p-button label="Add New Animal" (onClick)="toggleAddingNewAnimal()"></p-button>
+    </section>
+    <section>
+
+    </section>
+</div>
