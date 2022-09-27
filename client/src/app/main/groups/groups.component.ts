@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { GroupsService } from 'src/app/service/groups.service';
 import { MembersService } from 'src/app/service/members.service';
@@ -16,7 +16,9 @@ export class GroupsComponent implements OnInit {
     private groupService: GroupsService,
     private memberService: MembersService,
     private activatedRoute: ActivatedRoute,
-    private fb: FormBuilder) { }
+    private fb: FormBuilder) {
+      this.creatAnimalDetailsForm();
+    }
 
     animalTypeId!: any;
     animalType!: Animaltype;
@@ -24,11 +26,65 @@ export class GroupsComponent implements OnInit {
     isAnimalTypeLoading = true;
     isAnimalsLoading = true;
     animals!: Animal[];
+    animal!: Animal;
 
     isAddNewAnimal = false;
+    displayAnimalDetails = false;
+
+    animalDetailsForm!: FormGroup;
+
+    creatAnimalDetailsForm() {
+      this.animalDetailsForm = this.fb.group({
+        AnimalId: [''],
+        AnimalName: [''],
+        Age: [''],
+        Gender: [''],
+        Breed: [''],
+        Color: [''],
+        Size: [''],
+        Health: [''],
+        Charactor: [''],
+        WithCats: [''],
+        WithDogs: [''],
+        WithChildren: ['']
+      });
+    }
 
     toggleAddingNewAnimal(): void {
       this.isAddNewAnimal = !this.isAddNewAnimal;
+    }
+
+    displayDetails(animalId: number): void {
+      this.displayAnimalDetails = !this.displayAnimalDetails;
+      this.animalDetailsForm.reset();
+      this.getAnimalDetails(animalId);
+      console.log(this.animal);
+    }
+
+    getAnimalDetails(animalId: number): void {
+      this.memberService.getAnimalById(animalId).subscribe({
+        next: animal => this.setRetrievedToForm(animal),
+        error: error => this.errorMessage = error,
+        complete: ()=> console.log("complete" + this.animal),
+      })
+    }
+
+    setRetrievedToForm(animal: Animal): void {
+      this.animal = animal;
+      this.animalDetailsForm.setValue({
+        AnimalId: this.animal.AnimalId,
+        AnimalName: this.animal.AnimalName,
+        Age: this.animal.Age,
+        Gender: this.animal.Gender,
+        Breed: this.animal.Breed,
+        Color: this.animal.Color,
+        Size: this.animal.Size,
+        Health: this.animal.Health,
+        Charactor: this.animal.Charactor,
+        WithCats: this.animal.WithCats,
+        WithDogs: this.animal.WithDogs,
+        WithChildren: this.animal.WithChildren
+      });
     }
 
   ngOnInit(): void {
