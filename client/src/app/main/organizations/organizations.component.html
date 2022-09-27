@@ -41,11 +41,12 @@
 
                     <h2 *ngIf="!isEditing">{{animalType.AnimalTypeName}}</h2>
                     <!--  -->
-                    <input *ngIf="isEditing&&animalType.AnimalTypeId==animalTypes[i].AnimalTypeId " pInputText value="{{animalType?.AnimalTypeName}}"
+                    <input  *ngIf="isEditing" pInputText value="{{animalType?.AnimalTypeName}}"
                         formControlName="AnimalTypeName" />
-
+                    <p>AnimalTypeId: {{animalType.AnimalTypeId}}</p>
+                    <p>animalTypes[i].AnimalTypeId: {{animalTypes[i].AnimalTypeId}}</p>
                     <div>
-                        <p-button *ngIf="!isEditing" label="Edit"
+                        <p-button [id]="animalType.AnimalTypeId" *ngIf="!isEditing" label="Edit"
                             (onClick)="toggleEditingState(animalTypes[i].AnimalTypeId)"></p-button>
 
                         <p-button *ngIf="isEditing" label="Save"

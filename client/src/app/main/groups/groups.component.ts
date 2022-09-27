@@ -30,6 +30,8 @@ export class GroupsComponent implements OnInit {
 
     isAddNewAnimal = false;
     displayAnimalDetails = false;
+    isDeleting = false;
+
 
     animalDetailsForm!: FormGroup;
 
@@ -50,8 +52,12 @@ export class GroupsComponent implements OnInit {
       });
     }
 
+
+
     toggleAddingNewAnimal(): void {
       this.isAddNewAnimal = !this.isAddNewAnimal;
+      this.displayAnimalDetails = !this.displayAnimalDetails;
+      this.animalDetailsForm.reset();
     }
 
     displayDetails(animalId: number): void {
@@ -84,6 +90,18 @@ export class GroupsComponent implements OnInit {
         WithCats: this.animal.WithCats,
         WithDogs: this.animal.WithDogs,
         WithChildren: this.animal.WithChildren
+      });
+    }
+
+    toggleDeletionDialog(): void {
+      this.isDeleting = !this.isDeleting;
+    }
+
+    deleteAnimal(animalId: number) {
+      console.log('deleteAnimal() called');
+      this.memberService.deleteAnimalById(animalId, this.animalTypeId).subscribe({
+        error: (error) => console.log(error),
+        complete: () => window.location.reload(),
       });
     }
 

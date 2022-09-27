@@ -18,6 +18,8 @@
                 <p-button label="See Details!" (onClick)="displayDetails(animal.AnimalId)"></p-button>
 
             </ng-template>
+
+
         </p-card>
     </section>
 
@@ -31,56 +33,58 @@
                 </section>
 
                 <section id="detailBody">
-                    <label for="AnimalId">AnimalId: <input type="text" id="AnimalId" pInputText value="{{animal?.AnimalId}}"
-                        formControlName="AnimalId" /></label>
-                <label for="AnimalName">AnimalName: <input type="text" id="AnimalName" pInputText value="{{animal?.AnimalName}}"
-                        formControlName="AnimalName" /></label>
-                <label for="Age">Age: <input type="text" id="Age" pInputText value="{{animal?.Age}}"
-                        formControlName="Age" /></label>
-                <label for="Gender">Gender: <input type="text" id="Gender" pInputText value="{{animal?.Gender}}"
-                        formControlName="Gender" /></label>
-                <label for="Breed">Breed: <input type="text" id="Breed" pInputText value="{{animal?.Breed}}"
-                        formControlName="Breed" /></label>
-                <label for="Color">Color: <input type="text" id="Color" pInputText value="{{animal?.Color}}"
-                        formControlName="Color" /></label>
-                <label for="Size">Size: <input type="text" id="Size" pInputText value="{{animal?.Size}}"
-                        formControlName="Size" /></label>
-                <label for="Health">Health: <input type="text" id="Health" pInputText value="{{animal?.Health}}"
-                        formControlName="Health" /></label>
-                <label for="Charactor">Charactor: <input type="text" id="Charactor" pInputText value="{{animal?.Charactor}}"
-                        formControlName="Charactor" /></label>
-                <label for="WithCats">WithCats: <input type="text" id="WithCats" pInputText value="{{animal?.WithCats}}"
-                        formControlName="WithCats" /></label>
-                <label for="WithDogs">WithDogs: <input type="text" id="WithDogs" pInputText value="{{animal?.WithDogs}}"
-                        formControlName="WithDogs" /></label>
-                <label for="WithChildren">WithChildren: <input type="text" id="WithChildren" pInputText value="{{animal?.WithChildren}}"
-                        formControlName="WithChildren" /></label>
+                    <label for="AnimalId">AnimalId: <input type="text" id="AnimalId" pInputText
+                            value="{{animal?.AnimalId}}" formControlName="AnimalId" /></label>
+                    <label for="AnimalName">AnimalName: <input type="text" id="AnimalName" pInputText
+                            value="{{animal?.AnimalName}}" formControlName="AnimalName" /></label>
+                    <label for="Age">Age: <input type="text" id="Age" pInputText value="{{animal?.Age}}"
+                            formControlName="Age" /></label>
+                    <label for="Gender">Gender: <input type="text" id="Gender" pInputText value="{{animal?.Gender}}"
+                            formControlName="Gender" /></label>
+                    <label for="Breed">Breed: <input type="text" id="Breed" pInputText value="{{animal?.Breed}}"
+                            formControlName="Breed" /></label>
+                    <label for="Color">Color: <input type="text" id="Color" pInputText value="{{animal?.Color}}"
+                            formControlName="Color" /></label>
+                    <label for="Size">Size: <input type="text" id="Size" pInputText value="{{animal?.Size}}"
+                            formControlName="Size" /></label>
+                    <label for="Health">Health: <input type="text" id="Health" pInputText value="{{animal?.Health}}"
+                            formControlName="Health" /></label>
+                    <label for="Charactor">Charactor: <input type="text" id="Charactor" pInputText
+                            value="{{animal?.Charactor}}" formControlName="Charactor" /></label>
+                    <label for="WithCats">WithCats: <input type="text" id="WithCats" pInputText
+                            value="{{animal?.WithCats}}" formControlName="WithCats" /></label>
+                    <label for="WithDogs">WithDogs: <input type="text" id="WithDogs" pInputText
+                            value="{{animal?.WithDogs}}" formControlName="WithDogs" /></label>
+                    <label for="WithChildren">WithChildren: <input type="text" id="WithChildren" pInputText
+                            value="{{animal?.WithChildren}}" formControlName="WithChildren" /></label>
 
-                <!-- <p-checkbox label="Good with cats?" value="{{animal?.WithCats}}" [formControl]="$any(animalDetailsForm).controls['WithCats']"></p-checkbox> -->
+                    <!-- <p-checkbox label="Good with cats?" value="{{animal?.WithCats}}" [formControl]="$any(animalDetailsForm).controls['WithCats']"></p-checkbox> -->
                 </section>
 
                 <section id="detailFooter">
-                    <p-button label="Save" ></p-button>
-                    <p-button label="Delete" ></p-button>
+                    <p-button label="Save"></p-button>
+                    <p-button label="Delete" (onClick)="toggleDeletionDialog()"></p-button>
                 </section>
             </div>
 
-            <!-- <p-dialog [(visible)]="isDeleting" [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
+            <p-dialog [(visible)]="isDeleting" [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
                     [style]="{width: '50vw'}">
                     <ng-template pTemplate="header">
-                        <h1>Are you sure you want to delete animal type {{animalType.AnimalTypeName}} ?</h1>
+                        <h1>Are you sure you want to delete {{animal.AnimalName}} ?</h1>
                     </ng-template>
                     <ng-template pTemplate="content">
-                        <h2> {{animalType.AnimalTypeName}}</h2>
-                        <h3>Occupancy of {{animalType.AnimalTypeName}}</h3>
-                        <p-progressBar value="{{calProgressBar(animalType.Animals.length, animalType.Capacity)}}"
-                            styleClass="prime-progress"></p-progressBar>
+                        <ul>
+                            <li>Name: {{animal.AnimalName}}</li>
+                            <li>Age: {{animal.Age}}</li>
+                            <li>Gender: {{animal.Gender}}</li>
+                            <li>Breed: {{animal.Breed}}</li>
+                        </ul>
                     </ng-template>
                     <ng-template pTemplate="footer">
-                        <p-button label="Yes" (onClick)="deleteAnimalType(animalType.AnimalTypeId)"></p-button>
+                        <p-button label="Yes" (onClick)="deleteAnimal(animal.AnimalId)"></p-button>
                         <p-button label="No" (onClick)="toggleDeletionDialog()"></p-button>
                     </ng-template>
-                </p-dialog> -->
+                </p-dialog>
 
         </p-sidebar>
     </form>
