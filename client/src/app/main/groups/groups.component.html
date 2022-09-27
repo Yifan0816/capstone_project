@@ -18,8 +18,6 @@
                 <p-button label="See Details!" (onClick)="displayDetails(animal.AnimalId)"></p-button>
 
             </ng-template>
-
-
         </p-card>
     </section>
 
@@ -33,7 +31,7 @@
                 </section>
 
                 <section id="detailBody">
-                    <label for="AnimalId">AnimalId: <input type="text" id="AnimalId" pInputText
+                    <label *ngIf="!isAddNewAnimal" for="AnimalId">AnimalId: <input type="text" id="AnimalId" pInputText
                             value="{{animal?.AnimalId}}" formControlName="AnimalId" /></label>
                     <label for="AnimalName">AnimalName: <input type="text" id="AnimalName" pInputText
                             value="{{animal?.AnimalName}}" formControlName="AnimalName" /></label>
@@ -62,7 +60,7 @@
                 </section>
 
                 <section id="detailFooter">
-                    <p-button label="Save"></p-button>
+                    <p-button label="Save" (onClick)="submitAnimalForm(animalDetailsForm.value)"></p-button>
                     <p-button label="Delete" (onClick)="toggleDeletionDialog()"></p-button>
                 </section>
             </div>

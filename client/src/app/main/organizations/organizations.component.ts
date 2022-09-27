@@ -30,6 +30,8 @@ export class OrganizationsComponent implements OnInit {
   isEditing = false;
   isAddNewAnimalType = false;
   isDeleting = false;
+  editingId!: number;
+  deletingId!: number;
 
   animalTypeForm!: FormGroup;
   animalType!: Animaltype;
@@ -49,15 +51,25 @@ export class OrganizationsComponent implements OnInit {
     });
   }
 
+  enableDeletingDialog(animalTypeId: number): void {
+    this.toggleDeletionDialog();
+    this.deletingId = animalTypeId;
+  }
   toggleDeletionDialog(): void {
     this.isDeleting = !this.isDeleting;
+
   }
 
-  toggleEditingState(animalTypeId: number): void {
-    console.log("editing animal type id: "+animalTypeId);
+  toggleEditing(): void {
+    console.log("toggleEditing() called");
     this.isEditing = !this.isEditing;
-    this.getAnimalType(animalTypeId);
+  }
 
+  enableEditingState(animalTypeId: number): void {
+    console.log("editing animal type id: "+animalTypeId);
+    this.toggleEditing();
+    this.getAnimalType(animalTypeId);
+    this.editingId = animalTypeId;
   }
 
   toggleAddingNewType(): void {
@@ -65,16 +77,17 @@ export class OrganizationsComponent implements OnInit {
     this.animalTypeForm.reset();
   }
 
-  // When hit Edit button, only that card should be under edit, currently all cards went to edit
+
   deleteAnimalType(animalTypeId: number): void {
     this.isEditing = !this.isEditing;
     console.log('deleteAnimalType() called');
     this.groupService.deleteAnimalTypeById(animalTypeId).subscribe({
       error: (error) => console.log(error),
-      complete: () => window.location.reload(),
+      complete: () => this.getAllAnimalTypesByShelter(),
     });
   }
 
+  // After Edit button hit
   getAnimalType(animalTypeId: number): void {
     this.groupService.getAnimalTypeById(animalTypeId).subscribe({
       next: (animalType) => this.setRetrievedToForm(animalType),
@@ -93,7 +106,8 @@ export class OrganizationsComponent implements OnInit {
     });
   }
 
-  submitAnimalType(animalType: Animaltype, animalTypeId: number): void {
+  // After Save button hit
+  submitAnimalType(animalType: Animaltype): void {
     animalType.ShelterId = parseInt(
       this.activatedRoute.snapshot.paramMap.get('id')!
     );
@@ -101,26 +115,28 @@ export class OrganizationsComponent implements OnInit {
       console.log(`submitAnimalType: this.animalTypeForm.invalid = true`);
       return;
     }
+
     if (animalType.AnimalTypeId === null || animalType.AnimalTypeId < 1 ) {
+      this.toggleAddingNewType();
       this.addAnimalType(animalType);
-      // what's the difference between reload here and reload on completion
-      window.location.reload();
     }
     else {
+      this.toggleEditing();
       this.updateAnimalType(animalType);
-      window.location.reload();
     }
   }
 
   addAnimalType(animalType: Animaltype): void {
     this.groupService.addNewAnimalType(animalType).subscribe({
       error: (error) => console.log(error),
+      complete: () => this.getAllAnimalTypesByShelter(),
     });
   }
 
   updateAnimalType(animalType: Animaltype): void {
     this.groupService.updateAnimalType(animalType).subscribe({
       error: (error) => console.log(error),
+      complete: () => this.getAllAnimalTypesByShelter(),
     });
   }
 
@@ -128,23 +144,7 @@ export class OrganizationsComponent implements OnInit {
     return animalsLength / capacity * 100;
   }
 
-  ngOnInit(): void {
-    this.id = this.activatedRoute.snapshot.paramMap.get('id');
-    this.orgService.getShelterById(this.id).subscribe({
-      next: (res: any) => {
-        this.shelter = res;
-        console.log(this.shelter);
-      },
-      error: (err: any) => {
-        this.errorMessage = err;
-        console.log((this.errorMessage = err));
-      },
-      complete: () => {
-        console.log(`called getShelterById()`);
-        this.isSheltersLoading = false;
-      },
-    });
-
+  getAllAnimalTypesByShelter(): void{
     this.groupService.getAllAnimalTypesByShelter(this.id).subscribe({
       next: (res: any) => {
         this.animalTypes = res;
@@ -160,4 +160,29 @@ export class OrganizationsComponent implements OnInit {
       },
     });
   }
+
+  getShelterDetails(): void {
+    this.orgService.getShelterById(this.id).subscribe({
+      next: (res: any) => {
+        this.shelter = res;
+        console.log(this.shelter);
+      },
+      error: (err: any) => {
+        this.errorMessage = err;
+        console.log((this.errorMessage = err));
+      },
+      complete: () => {
+        console.log(`called getShelterById()`);
+        this.isSheltersLoading = false;
+      },
+    });
+  }
+
+  ngOnInit(): void {
+    this.id = this.activatedRoute.snapshot.paramMap.get('id');
+
+    this.getShelterDetails();
+    this.getAllAnimalTypesByShelter();
+  }
+
 }

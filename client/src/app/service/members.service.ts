@@ -32,7 +32,7 @@ export class MembersService {
   }
 
   deleteAnimalById(animalId: number, animalTypeId: number): Observable<Animal> {
-    const results: Observable<Animal> = this.http.delete<Animal>(this.dataUrl+`/api/animaltypes/${animalTypeId}/animals/${animalId}`);
+    const results: Observable<Animal> = this.http.delete<Animal>(this.dataUrl+`/animaltypes/${animalTypeId}/animals/${animalId}`);
     return results;
   }
 

@@ -14,23 +14,19 @@
         <form [formGroup]="animalTypeForm" novalidate>
             <p-card *ngIf="isAddNewAnimalType" styleClass="prime-card-override">
                 <ng-template pTemplate="header">
-                    <input type="text" pInputText placeholder="Enter Animal Type" formControlName="AnimalTypeName"
-                        value="{{animalType?.AnimalTypeName}}" />
+                    <input type="text" pInputText placeholder="Enter Animal Type" formControlName="AnimalTypeName" value="{{animalType?.AnimalTypeName}}" />
                     <div>
-                        <p-button label="Save" (onClick)="submitAnimalType(animalTypeForm.value, 0)">
-                        </p-button>
+                        <p-button label="Save" (onClick)="submitAnimalType(animalTypeForm.value)"></p-button>
                         <p-button label="Cancel" (onClick)="toggleAddingNewType()"></p-button>
                     </div>
                 </ng-template>
                 <ng-template pTemplate="content">
                     <div class="progressGroup">
-                        <input type="text" pInputText placeholder="Enter Capacity" formControlName="Capacity"
-                            value="{{animalType?.Capacity}}" />
-                        <h3>Occupancy of {{animalType.AnimalTypeName}}</h3>
+                        <input type="text" pInputText placeholder="Enter Capacity" formControlName="Capacity" value="{{animalType?.Capacity}}" />
+                        <h3>Occupancy of {{animalType?.AnimalTypeName}}</h3>
                         <p-progressBar value="0" styleClass="prime-progress"></p-progressBar>
                     </div>
                 </ng-template>
-
             </p-card>
         </form>
 
@@ -38,34 +34,27 @@
         <form [formGroup]="animalTypeForm" novalidate>
             <p-card *ngFor="let animalType of animalTypes; let i=index" styleClass="prime-card-override">
                 <ng-template pTemplate="header">
-
-                    <h2 *ngIf="!isEditing">{{animalType.AnimalTypeName}}</h2>
-                    <!--  -->
-                    <input  *ngIf="isEditing" pInputText value="{{animalType?.AnimalTypeName}}"
-                        formControlName="AnimalTypeName" />
-                    <p>AnimalTypeId: {{animalType.AnimalTypeId}}</p>
-                    <p>animalTypes[i].AnimalTypeId: {{animalTypes[i].AnimalTypeId}}</p>
+                    <h2 *ngIf="!isEditing || animalTypes[i].AnimalTypeId!=editingId">{{animalType.AnimalTypeName}}</h2>
+                    <input *ngIf="isEditing && animalTypes[i].AnimalTypeId==editingId" pInputText
+                        value="{{animalType?.AnimalTypeName}}" formControlName="AnimalTypeName" />
                     <div>
-                        <p-button [id]="animalType.AnimalTypeId" *ngIf="!isEditing" label="Edit"
-                            (onClick)="toggleEditingState(animalTypes[i].AnimalTypeId)"></p-button>
-
-                        <p-button *ngIf="isEditing" label="Save"
-                            (onClick)="submitAnimalType(animalTypeForm.value, animalType.AnimalTypeId)"></p-button>
-                        <p-button *ngIf="isEditing" label="Delete" (onClick)="toggleDeletionDialog()"></p-button>
-                        <button type="button" *ngIf="isEditing" class="pi pi-times"
-                            (click)="isEditing = !isEditing"></button>
-
+                        <p-button *ngIf="!isEditing || animalTypes[i].AnimalTypeId!=editingId" label="Edit"
+                            (onClick)="enableEditingState(animalTypes[i].AnimalTypeId)"></p-button>
+                        <p-button *ngIf="isEditing && animalTypes[i].AnimalTypeId==editingId" label="Save"
+                            (onClick)="submitAnimalType(animalTypeForm.value)"></p-button>
+                        <p-button *ngIf="isEditing && animalTypes[i].AnimalTypeId==editingId" label="Delete"
+                            (onClick)="enableDeletingDialog(animalTypes[i].AnimalTypeId)"></p-button>
+                        <button *ngIf="isEditing && animalTypes[i].AnimalTypeId==editingId" type="button"
+                            class="pi pi-times" (click)="toggleEditing()"></button>
                     </div>
                 </ng-template>
 
                 <ng-template pTemplate="content">
                     <div class="progressGroup">
-                        <input *ngIf="isEditing" type="text" pInputText value="{{animalType?.Capacity}}"
-                            formControlName="Capacity" />
+                        <input *ngIf="isEditing&&animalTypes[i].AnimalTypeId==editingId" type="text" pInputText value="{{animalType?.Capacity}}" formControlName="Capacity" />
                         <h3>Occupancy of {{animalType.AnimalTypeName}}</h3>
                         <!-- TODO databing the length of Animals Array in here and do the math  -->
-                        <p-progressBar value="{{calProgressBar(animalType.Animals.length, animalType.Capacity)}}"
-                            styleClass="prime-progress"></p-progressBar>
+                        <p-progressBar value="{{calProgressBar(animalType.Animals.length, animalType.Capacity)}}" styleClass="prime-progress"></p-progressBar>
                     </div>
                     <!-- TODO instead of do ngIf, do visibility:none in CSS so it doesn't mess up the card layout -->
                     <!-- {!IF(isEditing,'hideButton', 'avalBtn')} -->
@@ -76,7 +65,7 @@
                 </ng-template>
 
                 <!-- Dialog on delete button -->
-                <p-dialog [(visible)]="isDeleting" [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
+                <p-dialog [(visible)]="isDeleting && animalTypes[i].AnimalTypeId==deletingId" [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
                     [style]="{width: '50vw'}">
                     <ng-template pTemplate="header">
                         <h1>Are you sure you want to delete animal type {{animalType.AnimalTypeName}} ?</h1>

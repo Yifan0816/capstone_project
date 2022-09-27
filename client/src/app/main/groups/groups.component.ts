@@ -105,6 +105,36 @@ export class GroupsComponent implements OnInit {
       });
     }
 
+    submitAnimalForm(animal: Animal): void {
+      if (this.animalDetailsForm.invalid) {
+        console.log(`submitAnimalType: this.animalTypeForm.invalid = true`);
+        return;
+      }
+      if (animal.AnimalId === null || animal.AnimalId < 1 ) {
+        this.addAnimal(animal);
+        // what's the difference between reload here and reload on completion
+        window.location.reload();
+      }
+      else {
+        this.updateAnimal(animal);
+        window.location.reload();
+      }
+    }
+
+    addAnimal(animal: Animal) {
+      this.memberService.addNewAnimal(animal, this.animalTypeId).subscribe({
+        error: (error) => console.log(error),
+      });
+    }
+
+    updateAnimal(animal: Animal) {
+      this.memberService.updateAnimal(animal).subscribe({
+        error: (error) => console.log(error),
+      });
+    }
+
+
+
   ngOnInit(): void {
 
     this.animalTypeId = this.activatedRoute.snapshot.paramMap.get('id');
