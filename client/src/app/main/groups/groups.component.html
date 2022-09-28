@@ -1,6 +1,6 @@
 <div>
     <section id="animalTypeDetails" *ngIf="!isAnimalTypeLoading">
-        <img src="../assets/shelters/{{ animalTypeId }}.jpg" alt="">
+        <img src="../assets/shelters/{{ animalType.AnimalTypeId }}.jpg" alt="">
         <h2>{{ animalType.AnimalTypeName}}</h2>
         <p-button *ngIf="animalType.AnimalTypeId!=0" label="Add New Animal" (onClick)="toggleAddingNewAnimal()"></p-button>
     </section>

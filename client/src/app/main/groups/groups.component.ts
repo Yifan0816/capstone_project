@@ -196,6 +196,7 @@ export class GroupsComponent implements OnInit {
       Capacity: 0,
       Animals: []
     };
+    this.isAnimalTypeLoading = false;
   }
 
   getAllAnimals(): void {

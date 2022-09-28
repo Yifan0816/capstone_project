@@ -12,7 +12,8 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { DropdownModule } from 'primeng/dropdown';
 import { AutoCompleteModule } from 'primeng/autocomplete';
-import { FilterService } from "primeng/api";
+import { FilterService } from 'primeng/api';
+import { ListboxModule } from 'primeng/listbox';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -54,7 +55,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     CheckboxModule,
     BreadcrumbModule,
     DropdownModule,
-    AutoCompleteModule
+    AutoCompleteModule,
+    ListboxModule
   ],
   providers: [FilterService],
   bootstrap: [AppComponent],

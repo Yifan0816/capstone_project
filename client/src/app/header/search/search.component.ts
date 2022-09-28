@@ -11,7 +11,8 @@ import { Shelter } from 'src/models/shelter';
 export class SearchComponent implements OnInit {
   searchInput!: any;
   searchResult!: Array<Animaltype>;
-  animalTypes!: Array<Animaltype>;
+  animalTypes!: Animaltype[];
+  selectedType!: any;
 
   constructor(
     private groupsService: GroupsService,
@@ -33,8 +34,9 @@ export class SearchComponent implements OnInit {
         filtered.push(type);
       }
     });
-    this.searchResult = filtered;
+    this.searchResult = [...filtered];
   }
+
 
   ngOnInit(): void {
     this.getAllAnimalTypes();

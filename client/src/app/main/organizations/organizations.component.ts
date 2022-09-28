@@ -204,6 +204,7 @@ export class OrganizationsComponent implements OnInit {
       ShelterId: 0,
       Description: ""
     };
+    
   }
 
   getAllAnimalTypes(): void {

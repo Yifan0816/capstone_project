@@ -4,3 +4,22 @@
     padding-top: 1em;
     padding-right: 1em;
 } */
+
+ul {
+    background-color: white;
+}
+
+li {
+    color: black;
+    text-decoration: none;
+    display: inline;
+    padding-right: 1.45em;
+    padding-left: 0.45em;
+    cursor: pointer;
+  }
+
+p:hover {
+    text-decoration: none;
+background-color: teal;
+
+  }

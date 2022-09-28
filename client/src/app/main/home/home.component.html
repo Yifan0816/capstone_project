@@ -9,30 +9,6 @@
     </section>
 </section>
 
-<!-- <section id="organizationIcons">
-    <a [routerLink]="getRoute(1)">
-        <h3>Shelter 1</h3>
-        <img src="https://via.placeholder.com/100" alt="">
-        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Facilis sapiente rerum vitae esse officia ipsum,
-            modi eveniet mollitia, totam error officiis laborum quos, voluptatibus deserunt? Repellat rem at blanditiis
-            id.</p>
-    </a>
-    <a [routerLink]="getRoute(2)" id="flex">
-        <h3>Shelter 2</h3>
-        <img src="https://via.placeholder.com/100" alt="">
-        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Facilis sapiente rerum vitae esse officia ipsum,
-            modi eveniet mollitia, totam error officiis laborum quos, voluptatibus deserunt? Repellat rem at blanditiis
-            id.</p>
-    </a>
-    <a [routerLink]="getRoute(3)">
-        <h3>Shelter 3</h3>
-        <img src="https://via.placeholder.com/100" alt="">
-        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Facilis sapiente rerum vitae esse officia ipsum,
-            modi eveniet mollitia, totam error officiis laborum quos, voluptatibus deserunt? Repellat rem at blanditiis
-            id.</p>
-    </a>
-</section> -->
-
 <section id="organizationIcons">
 
     <a *ngFor="let shelter of allShelters" [routerLink]="getRoute(shelter.ShelterId)">

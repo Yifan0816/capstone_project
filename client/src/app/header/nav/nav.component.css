@@ -11,10 +11,15 @@ ul {
 }
 
 li {
-  color: #fff;
+  color: black;
   text-decoration: none;
   display: inline;
   padding-right: 1.45em;
   padding-left: 0.45em;
   cursor: pointer;
+}
+
+li:hover {
+  color: teal;
+
 }

@@ -9,6 +9,7 @@ div {
     padding-left: 2em;
     padding-right: 2em;
     flex-basis: 35%;
+    height: 40%;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -16,7 +17,7 @@ div {
   }
 
   #animalsCards {
-    flex-basis: 60%;
+    /* flex-basis: 60%; */
   }
 
   ul {
