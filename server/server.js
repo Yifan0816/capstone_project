@@ -263,6 +263,7 @@ app.post("/api/animaltypes", urlencodedParser, function (req, res) {
     AnimalTypeId: getNextId("animalType"), // assign id to group
     AnimalTypeName: req.body.AnimalTypeName,
     ShelterId: Number(req.body.ShelterId),
+    ShelterName: req.body.ShelterName,
     Capacity: Number(req.body.Capacity),
     Animals: [],
   };
@@ -303,6 +304,7 @@ app.put("/api/animaltypes", urlencodedParser, function (req, res) {
     AnimalTypeId: Number(req.body.AnimalTypeId),
     AnimalTypeName: req.body.AnimalTypeName,
     ShelterId: Number(req.body.ShelterId),
+    ShelterName: req.body.ShelterName,
     Capacity: Number(req.body.Capacity),
     Animals: [],
   };
@@ -331,6 +333,7 @@ app.put("/api/animaltypes", urlencodedParser, function (req, res) {
   // update the group
   match.AnimalTypeName = group.AnimalTypeName;
   match.ShelterId = group.ShelterId;
+  match.ShelterName = group.ShelterName;
 
   // make sure new values for MaxGroupSize doesn't invalidate grooup
   if (Number(group.Capacity) < match.Animals.length) {

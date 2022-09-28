@@ -2,7 +2,7 @@
     <section id="animalTypeDetails" *ngIf="!isAnimalTypeLoading">
         <img src="../assets/shelters/{{ animalTypeId }}.jpg" alt="">
         <h2>{{ animalType.AnimalTypeName}}</h2>
-        <p-button label="Add New Animal" (onClick)="toggleAddingNewAnimal()"></p-button>
+        <p-button *ngIf="animalType.AnimalTypeId!=0" label="Add New Animal" (onClick)="toggleAddingNewAnimal()"></p-button>
     </section>
     <section id="animalsCards">
         <p-card *ngFor="let animal of animals" styleClass="prime-card-override">
@@ -24,15 +24,12 @@
     <form *ngIf="displayAnimalDetails" [formGroup]="animalDetailsForm" novalidate>
         <p-sidebar [(visible)]="displayAnimalDetails" position="right" styleClass="p-sidebar-md">
             <div id="sideBarWrapper">
-                <section id="detailHeader">
+                <section *ngIf="!isAddNewAnimal" id="detailHeader">
                     <h2>{{animal?.AnimalName}}</h2>
                     <img src="https://via.placeholder.com/100" alt="">
 
                 </section>
-
                 <section id="detailBody">
-                    <label *ngIf="!isAddNewAnimal" for="AnimalId">AnimalId: <input type="text" id="AnimalId" pInputText
-                            value="{{animal?.AnimalId}}" formControlName="AnimalId" /></label>
                     <label for="AnimalName">AnimalName: <input type="text" id="AnimalName" pInputText
                             value="{{animal?.AnimalName}}" formControlName="AnimalName" /></label>
                     <label for="Age">Age: <input type="text" id="Age" pInputText value="{{animal?.Age}}"
@@ -55,8 +52,6 @@
                             value="{{animal?.WithDogs}}" formControlName="WithDogs" /></label>
                     <label for="WithChildren">WithChildren: <input type="text" id="WithChildren" pInputText
                             value="{{animal?.WithChildren}}" formControlName="WithChildren" /></label>
-
-                    <!-- <p-checkbox label="Good with cats?" value="{{animal?.WithCats}}" [formControl]="$any(animalDetailsForm).controls['WithCats']"></p-checkbox> -->
                 </section>
 
                 <section id="detailFooter">
@@ -66,23 +61,23 @@
             </div>
 
             <p-dialog [(visible)]="isDeleting" [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
-                    [style]="{width: '50vw'}">
-                    <ng-template pTemplate="header">
-                        <h1>Are you sure you want to delete {{animal.AnimalName}} ?</h1>
-                    </ng-template>
-                    <ng-template pTemplate="content">
-                        <ul>
-                            <li>Name: {{animal.AnimalName}}</li>
-                            <li>Age: {{animal.Age}}</li>
-                            <li>Gender: {{animal.Gender}}</li>
-                            <li>Breed: {{animal.Breed}}</li>
-                        </ul>
-                    </ng-template>
-                    <ng-template pTemplate="footer">
-                        <p-button label="Yes" (onClick)="deleteAnimal(animal.AnimalId)"></p-button>
-                        <p-button label="No" (onClick)="toggleDeletionDialog()"></p-button>
-                    </ng-template>
-                </p-dialog>
+                [style]="{width: '50vw'}">
+                <ng-template pTemplate="header">
+                    <h1>Are you sure you want to delete {{animal.AnimalName}} ?</h1>
+                </ng-template>
+                <ng-template pTemplate="content">
+                    <ul>
+                        <li>Name: {{animal.AnimalName}}</li>
+                        <li>Age: {{animal.Age}}</li>
+                        <li>Gender: {{animal.Gender}}</li>
+                        <li>Breed: {{animal.Breed}}</li>
+                    </ul>
+                </ng-template>
+                <ng-template pTemplate="footer">
+                    <p-button label="Yes" (onClick)="deleteAnimal(animal.AnimalId)"></p-button>
+                    <p-button label="No" (onClick)="toggleDeletionDialog()"></p-button>
+                </ng-template>
+            </p-dialog>
 
         </p-sidebar>
     </form>

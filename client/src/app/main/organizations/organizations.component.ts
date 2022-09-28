@@ -21,7 +21,7 @@ export class OrganizationsComponent implements OnInit {
     this.creatAnimalTypeForm();
   }
 
-  id!: any;
+  ShelterId!: any;
   shelter!: Shelter;
   errorMessage!: string;
   isSheltersLoading = true;
@@ -83,7 +83,14 @@ export class OrganizationsComponent implements OnInit {
     console.log('deleteAnimalType() called');
     this.groupService.deleteAnimalTypeById(animalTypeId).subscribe({
       error: (error) => console.log(error),
-      complete: () => this.getAllAnimalTypesByShelter(),
+      complete: () => {
+        if(this.ShelterId == 0) {
+          this.getAllAnimalTypes();
+        } else {
+          this.getAllAnimalTypesByShelter();
+        }
+
+        },
     });
   }
 
@@ -108,9 +115,8 @@ export class OrganizationsComponent implements OnInit {
 
   // After Save button hit
   submitAnimalType(animalType: Animaltype): void {
-    animalType.ShelterId = parseInt(
-      this.activatedRoute.snapshot.paramMap.get('id')!
-    );
+    animalType.ShelterId = this.ShelterId;
+    animalType.ShelterName = this.shelter.ShelterName;
     if (this.animalTypeForm.invalid) {
       console.log(`submitAnimalType: this.animalTypeForm.invalid = true`);
       return;
@@ -129,14 +135,28 @@ export class OrganizationsComponent implements OnInit {
   addAnimalType(animalType: Animaltype): void {
     this.groupService.addNewAnimalType(animalType).subscribe({
       error: (error) => console.log(error),
-      complete: () => this.getAllAnimalTypesByShelter(),
+      complete: () => {
+        if(this.ShelterId == 0) {
+          this.getAllAnimalTypes();
+        } else {
+          this.getAllAnimalTypesByShelter();
+        }
+
+        },
     });
   }
 
   updateAnimalType(animalType: Animaltype): void {
     this.groupService.updateAnimalType(animalType).subscribe({
       error: (error) => console.log(error),
-      complete: () => this.getAllAnimalTypesByShelter(),
+      complete: () => {
+        if(this.ShelterId == 0) {
+          this.getAllAnimalTypes();
+        } else {
+          this.getAllAnimalTypesByShelter();
+        }
+
+        },
     });
   }
 
@@ -145,7 +165,7 @@ export class OrganizationsComponent implements OnInit {
   }
 
   getAllAnimalTypesByShelter(): void{
-    this.groupService.getAllAnimalTypesByShelter(this.id).subscribe({
+    this.groupService.getAllAnimalTypesByShelter(this.ShelterId).subscribe({
       next: (res: any) => {
         this.animalTypes = res;
         console.log(this.animalTypes);
@@ -162,7 +182,7 @@ export class OrganizationsComponent implements OnInit {
   }
 
   getShelterDetails(): void {
-    this.orgService.getShelterById(this.id).subscribe({
+    this.orgService.getShelterById(this.ShelterId).subscribe({
       next: (res: any) => {
         this.shelter = res;
         console.log(this.shelter);
@@ -178,11 +198,43 @@ export class OrganizationsComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-    this.id = this.activatedRoute.snapshot.paramMap.get('id');
+  makeShelter(): void {
+    this.shelter = {
+      ShelterName: "All Animal Types",
+      ShelterId: 0,
+      Description: ""
+    };
+  }
 
-    this.getShelterDetails();
-    this.getAllAnimalTypesByShelter();
+  getAllAnimalTypes(): void {
+    this.groupService.getAllAnimalTypes().subscribe({
+      next: (res: any) => {
+        this.animalTypes = res;
+        console.log(this.animalTypes);
+      },
+      error: (err: any) => {
+        this.errorMessage = err;
+        console.log((this.errorMessage = err));
+      },
+      complete: () => {
+        console.log(`called getAllAnimalTypesByShelter()`);
+        this.isAnimalTypesLoading = false;
+      },
+    });
+  }
+
+  ngOnInit(): void {
+    this.ShelterId = this.activatedRoute.snapshot.paramMap.get('id');
+
+    if(this.ShelterId) {
+      this.getShelterDetails();
+      this.getAllAnimalTypesByShelter();
+    } else {
+      this.makeShelter();
+      this.getAllAnimalTypes();
+    }
+
+
   }
 
 }

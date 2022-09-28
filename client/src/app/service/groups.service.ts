@@ -17,6 +17,11 @@ export class GroupsService {
 
   constructor(private http: HttpClient) { }
 
+  getAllAnimalTypes(): Observable<Animaltype[]> {
+    const results: Observable<Animaltype[]> = this.http.get<Animaltype[]>(this.dataUrl+`/animaltypes`);
+    return results;
+  }
+  
   getAllAnimalTypesByShelter(shelterId: number): Observable<Animaltype[]> {
     const results: Observable<Animaltype[]> = this.http.get<Animaltype[]>(this.dataUrl+`/animaltypes/byshelter/${shelterId}`);
     return results;

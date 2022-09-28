@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import {MenuItem} from 'primeng/api';
 
 @Component({
   selector: 'app-nav',
@@ -6,10 +8,33 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./nav.component.css']
 })
 export class NavComponent implements OnInit {
-
+  items!: MenuItem[];
   constructor() { }
 
+  getRoute(route: string): string {
+    switch(route) {
+      case "allanimaltypes": {
+         return `/animaltypes/all`;
+
+      }
+      case "allanimals": {
+        return `/animals/all`;
+
+      }
+
+      default: {
+        return "";
+      }
+   }
+  }
+
   ngOnInit(): void {
+  //   this.items = [
+  //     {label:'Home'},
+  //     {label:'Shelter'},
+  //     {label:'Animal Type'},
+  //     {label:'Lionel Messi', url: 'https://en.wikipedia.org/wiki/Lionel_Messi'}
+  // ];
   }
 
 }

@@ -7,9 +7,11 @@ import { OrganizationsComponent } from './main/organizations/organizations.compo
 const fallbackRoute: Route = { path: '**', component: HomeComponent };
 
 const routes: Routes = [
-  {path:'home', component:HomeComponent},
+  {path:'', component:HomeComponent},
   {path:'shelters/:id', component:OrganizationsComponent},
   {path:'shelters/:id/animaltypes/:id', component:GroupsComponent},
+  {path:'animaltypes/all', component:OrganizationsComponent},
+  {path:'animals/all', component:GroupsComponent},
   fallbackRoute
 ];
 

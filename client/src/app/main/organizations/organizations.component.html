@@ -2,10 +2,10 @@
     <!-- TODO orgDetails should be sticky, scoll on groupCards only -->
     <!-- TODO need to fix the buttons and progress bar when scrolling(override z-index?), currently they're over the header -->
     <section id="orgDetails" *ngIf="!(isAnimalTypesLoading&&isSheltersLoading)">
-        <img src="../assets/shelters/{{ id }}.jpg" alt="">
+        <img src="../assets/shelters/{{ shelter.ShelterId }}.jpg" alt="">
         <h2>{{ shelter.ShelterName }}</h2>
         <p>{{ shelter.Description }}</p>
-        <p-button label="Add New Animal Type" (onClick)="toggleAddingNewType()"></p-button>
+        <p-button *ngIf="shelter.ShelterId!=0" label="Add New Animal Type" (onClick)="toggleAddingNewType()"></p-button>
     </section>
 
     <section id="groupCards" *ngIf="!isAnimalTypesLoading">

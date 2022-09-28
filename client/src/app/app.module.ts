@@ -9,6 +9,10 @@ import { DialogModule } from 'primeng/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SidebarModule } from 'primeng/sidebar';
 import { CheckboxModule } from 'primeng/checkbox';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
+import { DropdownModule } from 'primeng/dropdown';
+import { AutoCompleteModule } from 'primeng/autocomplete';
+import { FilterService } from "primeng/api";
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -47,9 +51,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     DialogModule,
     BrowserAnimationsModule,
     SidebarModule,
-    CheckboxModule
+    CheckboxModule,
+    BreadcrumbModule,
+    DropdownModule,
+    AutoCompleteModule
   ],
-  providers: [],
+  providers: [FilterService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

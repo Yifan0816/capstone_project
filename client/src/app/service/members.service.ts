@@ -16,6 +16,12 @@ export class MembersService {
 
   constructor(private http: HttpClient) { }
 
+
+  getAllAnimals(): Observable<Animal[]> {
+    const results: Observable<Animal[]> = this.http.get<Animal[]>(this.dataUrl+`/animals`);
+    return results;
+  }
+
   getAllAnimalsByAnimalType(animalTypeId: number): Observable<Animal[]> {
     const results: Observable<Animal[]> = this.http.get<Animal[]>(this.dataUrl+`/animals/byanimaltype/${animalTypeId}`);
     return results;
