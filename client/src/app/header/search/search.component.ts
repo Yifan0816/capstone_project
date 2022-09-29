@@ -66,7 +66,7 @@ export class SearchComponent implements OnInit {
         this.isLeaving = true;
         this.searchResult = [];
         console.log("prev route:" + this.previousRoute);
-        window.location.reload();
+        // window.location.reload();
       }
 
       if (event instanceof NavigationEnd) {

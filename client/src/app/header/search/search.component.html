@@ -8,8 +8,8 @@
 
     <ul>
         <li *ngFor="let animalType of searchResult">
-            <button (click)="routeTo(animalType)">{{ animalType.AnimalTypeName }} from
-                {{animalType.ShelterName}}</button>
+            <p-button (click)="routeTo(animalType)">{{ animalType.AnimalTypeName }} from
+                {{animalType.ShelterName}}</p-button>
         </li>
     </ul>
 
