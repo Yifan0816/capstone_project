@@ -1,12 +1,16 @@
-<div class="p-input-icon-left">
-    <em class="pi pi-search"></em>
-    <input type="text" pInputText [(ngModel)]="searchInput" (keyup)="filterFilteredAnimalTypes($event)"
-        placeholder="Search">
+<div>
+
+    <span class="p-input-icon-right">
+        <i class="pi pi-search"></i>
+        <input type="text" pInputText [(ngModel)]="searchInput" (keyup)="filterFilteredAnimalTypes($event)"
+            placeholder="Search">
+
+    </span>
+
     <ul>
         <li *ngFor="let animalType of searchResult">
-            <a [routerLink]="getRoute(animalType)">
-                <p> {{ animalType.AnimalTypeName }} from {{animalType.ShelterName}}</p>
-            </a>
+
+<button (click)="routeTo(animalType)">{{ animalType.AnimalTypeName }} from {{animalType.ShelterName}}</button>
         </li>
     </ul>
     <!-- <p-listbox [options]="animalTypes" [(ngModel)]="selectedType" optionLabel="name"></p-listbox> -->

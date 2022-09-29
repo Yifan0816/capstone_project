@@ -1,8 +1,8 @@
 footer {
-    background-color: #6ebb84;
-    padding: 0, 1em;
+    background-color: #d8e1e7;
+    padding: 1em;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
 
 }

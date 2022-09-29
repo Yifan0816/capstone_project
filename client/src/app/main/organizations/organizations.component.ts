@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { GroupsService } from 'src/app/service/groups.service';
 import { OrganizationsService } from 'src/app/service/organizations.service';
 import { Animaltype } from 'src/models/animaltypes';
@@ -16,7 +16,9 @@ export class OrganizationsComponent implements OnInit {
     private orgService: OrganizationsService,
     private groupService: GroupsService,
     private activatedRoute: ActivatedRoute,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router,
+    private route: ActivatedRoute,
   ) {
     this.creatAnimalTypeForm();
   }
@@ -37,9 +39,8 @@ export class OrganizationsComponent implements OnInit {
   animalType!: Animaltype;
   animalTypes!: Animaltype[];
 
-
-  getRoute(animalTypeId: number) {
-    return `animaltypes/${animalTypeId}`;
+  routeTo(animalType: Animaltype) {
+    this.router.navigate([`shelters/${animalType.ShelterId}/animaltypes/${animalType.AnimalTypeId}`]);
   }
 
   creatAnimalTypeForm() {
@@ -204,7 +205,7 @@ export class OrganizationsComponent implements OnInit {
       ShelterId: 0,
       Description: ""
     };
-    
+
   }
 
   getAllAnimalTypes(): void {

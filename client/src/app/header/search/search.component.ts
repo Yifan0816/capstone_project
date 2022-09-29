@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { GroupsService } from 'src/app/service/groups.service';
 import { Animaltype } from 'src/models/animaltypes';
 import { Shelter } from 'src/models/shelter';
@@ -16,10 +17,11 @@ export class SearchComponent implements OnInit {
 
   constructor(
     private groupsService: GroupsService,
+    private router: Router,
   ) {}
 
-  getRoute(animalType: Animaltype): string {
-    return `/shelters/${animalType.ShelterId}/animaltypes/${animalType.AnimalTypeId}`;
+  routeTo(animalType: Animaltype) {
+    this.router.navigate([`/shelters/${animalType.ShelterId}/animaltypes/${animalType.AnimalTypeId}`]);
   }
   getAllAnimalTypes(): void {
     this.groupsService.getAllAnimalTypes().subscribe({

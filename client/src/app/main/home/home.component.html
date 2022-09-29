@@ -1,19 +1,48 @@
 <section id="video-statement">
-    <img src="https://via.placeholder.com/650x500" alt="">
-    <section id="statement">
+    <!-- <img src="https://via.placeholder.com/650x500" alt=""> -->
+    <div id="pictureGal">
+        <p-galleria [value]="images" [responsiveOptions]="responsiveOptions"
+            [containerStyle]="{'max-width': '640px', 'margin-top':'2em'}" [numVisible]="5" [circular]="true"
+            [showItemNavigators]="true" [showThumbnails]="false" [showIndicators]="true"
+            [showItemNavigatorsOnHover]="true" [showIndicatorsOnItem]="true">
+            <ng-template pTemplate="item" let-item>
+                <img [src]="item.previewImageSrc" style="width: 100%; display: block;" />
+            </ng-template>
+            <!-- <ng-template pTemplate="thumbnail" let-item>
+            <div class="grid grid-nogutter justify-content-center">
+                <img [src]="item.thumbnailImageSrc" style="display: block;" />
+            </div>
+        </ng-template> -->
+        </p-galleria>
+    </div>
+
+
+    <div id="statement">
         <h2>About us</h2>
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam enim deserunt natus reiciendis dicta
             dignissimos neque cumque, architecto similique molestiae, illo provident eveniet tempore obcaecati. Nam
             consectetur quas officiis eaque.</p>
         <h2>Misstion Statement</h2>
-    </section>
+    </div>
 </section>
 
 <section id="organizationIcons">
 
     <a *ngFor="let shelter of allShelters" [routerLink]="getRoute(shelter.ShelterId)">
-        <h3>{{ shelter.ShelterName }}</h3>
+        <!-- <h3>{{ shelter.ShelterName }}</h3>
         <img src="../../assets/shelters/{{ shelter.ShelterId }}.jpg" alt="">
-        <p>{{ shelter.Description}}.</p>
+        <p>{{ shelter.Description}}.</p> -->
+        <p-card styleClass="prime-card-override">
+            <ng-template pTemplate="header">
+                <h3>{{ shelter.ShelterName }}</h3>
+            </ng-template>
+            <ng-template pTemplate="content">
+                <img src="../../assets/shelters/{{ shelter.ShelterId }}.jpg" alt="">
+            </ng-template>
+            <ng-template pTemplate="footer">
+                {{ shelter.Description}}
+            </ng-template>
+        </p-card>
     </a>
+
 </section>

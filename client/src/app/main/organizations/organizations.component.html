@@ -48,7 +48,6 @@
                             class="pi pi-times" (click)="toggleEditing()"></button>
                     </div>
                 </ng-template>
-
                 <ng-template pTemplate="content">
                     <div class="progressGroup">
                         <input *ngIf="isEditing&&animalTypes[i].AnimalTypeId==editingId" type="text" pInputText value="{{animalType?.Capacity}}" formControlName="Capacity" />
@@ -59,9 +58,10 @@
                     <!-- TODO instead of do ngIf, do visibility:none in CSS so it doesn't mess up the card layout -->
                     <!-- {!IF(isEditing,'hideButton', 'avalBtn')} -->
                     <!-- interpolation or ternary don't work with styleClass, dunno why -->
-                    <a [routerLink]="getRoute(animalType.AnimalTypeId)">
-                        <p-button label="See Avaliable Animals!" styleClass="avalBtn"></p-button>
-                    </a>
+                    <!-- <a [routerLink]="routeTo(animalType.AnimalTypeId)"> -->
+                        <!-- <a (onClick)="routeTo(animalType.AnimalTypeId)"> -->
+                        <p-button label="See Avaliable Animals!" styleClass="avalBtn" (onClick)="routeTo(animalType)"></p-button>
+
                 </ng-template>
 
                 <!-- Dialog on delete button -->

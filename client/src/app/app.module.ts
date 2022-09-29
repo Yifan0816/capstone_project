@@ -14,6 +14,8 @@ import { DropdownModule } from 'primeng/dropdown';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { FilterService } from 'primeng/api';
 import { ListboxModule } from 'primeng/listbox';
+import { DividerModule } from 'primeng/divider';
+import { GalleriaModule } from 'primeng/galleria';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -56,7 +58,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     BreadcrumbModule,
     DropdownModule,
     AutoCompleteModule,
-    ListboxModule
+    ListboxModule,
+    DividerModule,
+    GalleriaModule
   ],
   providers: [FilterService],
   bootstrap: [AppComponent],
