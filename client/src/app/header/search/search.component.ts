@@ -62,21 +62,23 @@ export class SearchComponent implements OnInit {
       if (event instanceof NavigationStart) {
         console.log(event);
 
+        this.searchInput = "";
         this.isLeaving = true;
         this.searchResult = [];
         console.log("prev route:" + this.previousRoute);
+        window.location.reload();
       }
 
       if (event instanceof NavigationEnd) {
         this.isLeaving = false;
         console.log(event);
         this.redirectRoute = event.url;
-
-        if (this.previousRoute.length() > 5 && this.redirectRoute.length() > 5) {
-          console.log(`previous url length ${this.previousRoute.length()}`);
-          console.log(`redirect url length ${this.redirectRoute.length()}`);
-          window.location.reload();
-        }
+        // window.location.reload();
+        // if (this.previousRoute.length() > 5 && this.redirectRoute.length() > 5) {
+        //   console.log(`previous url length ${this.previousRoute.length()}`);
+        //   console.log(`redirect url length ${this.redirectRoute.length()}`);
+        //   window.location.reload();
+        // }
         this.previousRoute = event.url;
 
         // console.log("redirect route:" + this.redirectRoute);
@@ -91,8 +93,8 @@ export class SearchComponent implements OnInit {
 
       this.activatedRoute.params.subscribe( (data) => {
 
-        // console.log("paramMap:");
-        // console.log(this.activatedRoute.snapshot.paramMap);
+        console.log("paramMap:");
+        console.log(this.activatedRoute.snapshot.paramMap);
         // const id = this.activatedRoute.snapshot.paramMap.get('token');
         // console.log('router subscription fired token:' + token);
         // if(null == token) return;
