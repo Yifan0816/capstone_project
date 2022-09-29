@@ -33,7 +33,7 @@ export class MembersService {
       animal,
       this.jsonContentTypeHeaders
     );
-    console.log(`addAnimalType(${animal}) returned ${results}`);
+    // console.log(`addAnimalType(${animal}) returned ${results}`);
     return results;
   }
 
@@ -48,7 +48,7 @@ export class MembersService {
       animalType,
       this.jsonContentTypeHeaders
     );
-    console.log(`updateAnimalType(${animalType}) returned ${results}`);
+    // console.log(`updateAnimalType(${animalType}) returned ${results}`);
     return results;
   }
 

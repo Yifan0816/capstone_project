@@ -62,14 +62,14 @@ export class GroupsComponent implements OnInit {
     this.displayAnimalDetails = !this.displayAnimalDetails;
     this.animalDetailsForm.reset();
     this.getAnimalDetails(animalId);
-    console.log(this.animal);
+    // console.log(this.animal);
   }
 
   getAnimalDetails(animalId: number): void {
     this.memberService.getAnimalById(animalId).subscribe({
       next: (animal) => this.setRetrievedToForm(animal),
       error: (error) => (this.errorMessage = error),
-      complete: () => console.log('complete' + this.animal),
+      // complete: () => console.log('complete' + this.animal),
     });
   }
 
@@ -96,7 +96,7 @@ export class GroupsComponent implements OnInit {
   }
 
   deleteAnimal(animalId: number) {
-    console.log('deleteAnimal() called');
+    // console.log('deleteAnimal() called');
     this.memberService.deleteAnimalById(animalId, this.animalTypeId).subscribe({
       error: (error) => console.log(error),
       complete: () => {
@@ -163,7 +163,7 @@ export class GroupsComponent implements OnInit {
         console.log((this.errorMessage = err));
       },
       complete: () => {
-        console.log(`called getShelterById()`);
+        // console.log(`called getShelterById()`);
         this.isAnimalTypeLoading = false;
       },
     });
@@ -181,7 +181,7 @@ export class GroupsComponent implements OnInit {
         console.log((this.errorMessage = err));
       },
       complete: () => {
-        console.log(`called getAllAnimalTypesByShelter()`);
+        // console.log(`called getAllAnimalTypesByShelter()`);
         this.isAnimalsLoading = false;
       },
     });
@@ -210,7 +210,7 @@ export class GroupsComponent implements OnInit {
         console.log((this.errorMessage = err));
       },
       complete: () => {
-        console.log(`called getAllAnimalTypesByShelter()`);
+        // console.log(`called getAllAnimalTypesByShelter()`);
         this.isAnimalsLoading = false;
       }
     });

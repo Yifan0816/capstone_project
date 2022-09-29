@@ -21,7 +21,7 @@ export class GroupsService {
     const results: Observable<Animaltype[]> = this.http.get<Animaltype[]>(this.dataUrl+`/animaltypes`);
     return results;
   }
-  
+
   getAllAnimalTypesByShelter(shelterId: number): Observable<Animaltype[]> {
     const results: Observable<Animaltype[]> = this.http.get<Animaltype[]>(this.dataUrl+`/animaltypes/byshelter/${shelterId}`);
     return results;
@@ -33,7 +33,7 @@ export class GroupsService {
       animalType,
       this.jsonContentTypeHeaders
     );
-    console.log(`addAnimalType(${animalType}) returned ${results}`);
+    // console.log(`addAnimalType(${animalType}) returned ${results}`);
     return results;
   }
 
@@ -48,7 +48,7 @@ export class GroupsService {
       animalType,
       this.jsonContentTypeHeaders
     );
-    console.log(`updateAnimalType(${animalType}) returned ${results}`);
+    // console.log(`updateAnimalType(${animalType}) returned ${results}`);
     return results;
   }
 

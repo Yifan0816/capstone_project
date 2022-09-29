@@ -193,7 +193,7 @@ export class OrganizationsComponent implements OnInit {
         console.log((this.errorMessage = err));
       },
       complete: () => {
-        console.log(`called getShelterById()`);
+        // console.log(`called getShelterById()`);
         this.isSheltersLoading = false;
       },
     });
@@ -212,20 +212,19 @@ export class OrganizationsComponent implements OnInit {
     this.groupService.getAllAnimalTypes().subscribe({
       next: (res: any) => {
         this.animalTypes = res;
-        console.log(this.animalTypes);
       },
       error: (err: any) => {
         this.errorMessage = err;
         console.log((this.errorMessage = err));
       },
       complete: () => {
-        console.log(`called getAllAnimalTypesByShelter()`);
         this.isAnimalTypesLoading = false;
       },
     });
   }
 
   ngOnInit(): void {
+    // console.log(this.activatedRoute.snapshot.paramMap);
     this.ShelterId = this.activatedRoute.snapshot.paramMap.get('id');
 
     if(this.ShelterId) {
