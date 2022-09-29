@@ -9,9 +9,13 @@
 
     <ul>
         <li *ngFor="let animalType of searchResult">
-
-<button (click)="routeTo(animalType)">{{ animalType.AnimalTypeName }} from {{animalType.ShelterName}}</button>
+            <button (click)="routeTo(animalType)">{{ animalType.AnimalTypeName }} from
+                {{animalType.ShelterName}}</button>
         </li>
     </ul>
-    <!-- <p-listbox [options]="animalTypes" [(ngModel)]="selectedType" optionLabel="name"></p-listbox> -->
+
+    <p>{{isLeaving}}</p>
+
+    <p *ngIf="isLeaving"> check </p>
+    <!-- <p-listbox [options]="names" [(ngModel)]="selectedType" optionLabel="name"></p-listbox> -->
 </div>
