@@ -2,10 +2,6 @@ div {
   display: flex;
   flex-direction: row;
 }
-#allAnimalPic {
-    height: 400px;
-    width: 500px;
-  }
 
 #orgDetails {
   padding-top: 5%;
@@ -21,10 +17,10 @@ div {
 }
 
 #GroupCards {
-    display: flex;
-    flex-direction: column-reverse;
-    justify-content: space-around;
-    align-items: center;
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: space-around;
+  align-items: center;
 }
 
 :host ::ng-deep .prime-card-override {
@@ -32,53 +28,46 @@ div {
 }
 
 :host ::ng-deep .p-card-header {
-    display: flex;
-    justify-content: space-between;
-    padding: 1em;
-
+  display: flex;
+  justify-content: space-between;
+  padding: 1em;
 }
 
 :host ::ng-deep .p-button {
-    background-color: aliceblue;
-    color: var(--green-400);
-    border-color: var(--gray-400);
-    margin-left: 1em;
+  background-color: aliceblue;
+  color: var(--green-400);
+  border-color: var(--gray-400);
+  margin-left: 1em;
 }
 
 :host ::ng-deep .p-card-content {
-    display: flex;
-    justify-content: space-between;
-
-
+  display: flex;
+  justify-content: space-between;
 }
 
 :host ::ng-deep .p-card-content .progressGroup {
-    display: flex;
-    flex-direction: column;
-
+  display: flex;
+  flex-direction: column;
 }
-
 
 h3 {
-    margin: 0;
+  margin: 0;
 }
 :host ::ng-deep .prime-progress {
-    /* TODO width need to be fixed here */
-    width: 40em;
-    /* flex-basis: 50%; */
+  width: 40em;
 }
 
 :host ::ng-deep .avalBtn {
-    margin-left: 2em;
-    text-decoration: none;
+  margin-left: 2em;
+  text-decoration: none;
 }
 
 :host ::ng-deep .hideButton {
-    visibility: none;
+  visibility: none;
 }
 
 #turnOffButton {
-    background-color: transparent;
-    border: 0;
-    margin-left: 1em;
+  background-color: transparent;
+  border: 0;
+  margin-left: 1em;
 }

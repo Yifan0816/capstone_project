@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { Message, MessageService } from 'primeng/api';
-import { AppModule } from 'src/app/app.module';
 import { GroupsService } from 'src/app/service/groups.service';
 import { MembersService } from 'src/app/service/members.service';
 import { Animal } from 'src/models/animal';
@@ -21,7 +20,7 @@ export class GroupsComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private fb: FormBuilder,
     private messageService: MessageService,
-    private titleService: Title,
+    private titleService: Title
   ) {
     this.creatAnimalDetailsForm();
 
@@ -62,8 +61,8 @@ export class GroupsComponent implements OnInit {
       Size: ['', Validators.required],
       Health: ['', Validators.required],
       Charactor: ['', Validators.required],
-      WithCats: ['' ],
-      WithDogs: ['' ],
+      WithCats: [''],
+      WithDogs: [''],
       WithChildren: [''],
     });
   }
@@ -75,8 +74,7 @@ export class GroupsComponent implements OnInit {
   toggleAddingNewAnimal(): void {
     this.isAddNewAnimal = true;
     this.animalDetailsForm.reset();
-  this.toggleDisplayingDetails();
-
+    this.toggleDisplayingDetails();
   }
 
   displayDetails(animalId: number): void {
@@ -89,13 +87,14 @@ export class GroupsComponent implements OnInit {
   getAnimalDetails(animalId: number): void {
     this.memberService.getAnimalById(animalId).subscribe({
       next: (animal) => this.setRetrievedToForm(animal),
-      error: (error) => {this.errorMessage = error;
+      error: (error) => {
+        this.errorMessage = error;
         this.popErrorToast({
           severity: 'error',
           summary: `Error Occurd Adding Animal ${animalId}!`,
           detail: 'Problem with server!',
-        });},
-      // complete: () => console.log('complete' + this.animal),
+        });
+      },
     });
   }
 
@@ -122,7 +121,6 @@ export class GroupsComponent implements OnInit {
   }
 
   deleteAnimal(animalId: number) {
-    // console.log('deleteAnimal() called');
     this.memberService.deleteAnimalById(animalId, this.animalTypeId).subscribe({
       error: (error) => {
         console.log(error);
@@ -150,11 +148,10 @@ export class GroupsComponent implements OnInit {
   }
 
   submitAnimalForm(animal: Animal): void {
-    animal.Gender = animal.Gender ?? "F";
-    animal.WithCats = animal.WithCats ?? "True";
-    animal.WithDogs = animal.WithDogs ?? "True";
-    animal.WithChildren = animal.WithChildren ?? "True";
-
+    animal.Gender = animal.Gender ?? 'F';
+    animal.WithCats = animal.WithCats ?? 'True';
+    animal.WithDogs = animal.WithDogs ?? 'True';
+    animal.WithChildren = animal.WithChildren ?? 'True';
 
     if (this.animalDetailsForm.invalid) {
       console.log(`submitAnimalType: this.animalTypeForm.invalid = true`);
@@ -174,13 +171,13 @@ export class GroupsComponent implements OnInit {
   }
 
   addAnimalValidations(): boolean {
-    return this.animalType.Animals.length < this.animalType.Capacity ? true: false;
+    return this.animalType.Animals.length < this.animalType.Capacity
+      ? true
+      : false;
   }
 
   addAnimal(animal: Animal) {
-    console.log(this.addAnimalValidations());
-    if(!this.addAnimalValidations()) {
-      console.log(this.addAnimalValidations());
+    if (!this.addAnimalValidations()) {
       this.popErrorToast({
         severity: 'error',
         summary: 'Cannot Add Animal',
@@ -255,7 +252,6 @@ export class GroupsComponent implements OnInit {
         });
       },
       complete: () => {
-        // console.log(`called getShelterById()`);
         this.isAnimalTypeLoading = false;
       },
     });
@@ -276,7 +272,6 @@ export class GroupsComponent implements OnInit {
         });
       },
       complete: () => {
-        // console.log(`called getAllAnimalTypesByShelter()`);
         this.isAnimalsLoading = false;
       },
     });
@@ -309,7 +304,6 @@ export class GroupsComponent implements OnInit {
         });
       },
       complete: () => {
-        // console.log(`called getAllAnimalTypesByShelter()`);
         this.isAnimalsLoading = false;
       },
     });

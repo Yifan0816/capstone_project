@@ -1,6 +1,4 @@
 <div>
-    <!-- TODO orgDetails should be sticky, scoll on groupCards only -->
-    <!-- TODO need to fix the buttons and progress bar when scrolling(override z-index?), currently they're over the header -->
     <section id="orgDetails" *ngIf="!(isAnimalTypesLoading&&isSheltersLoading)">
         <img id="allAnimalPic" src="../assets/shelters/{{ shelter.ShelterId }}.jpg" alt="">
         <h2>{{ shelter.ShelterName }}</h2>
@@ -14,7 +12,8 @@
         <form [formGroup]="animalTypeForm" novalidate>
             <p-card *ngIf="isAddNewAnimalType" styleClass="prime-card-override">
                 <ng-template pTemplate="header">
-                    <input type="text" pInputText placeholder="Enter Animal Type" formControlName="AnimalTypeName" value="{{animalType?.AnimalTypeName}}" />
+                    <input type="text" pInputText placeholder="Enter Animal Type" formControlName="AnimalTypeName"
+                        value="{{animalType?.AnimalTypeName}}" />
                     <div>
                         <p-button label="Save" (onClick)="submitAnimalType(animalTypeForm.value)"></p-button>
                         <p-button label="Cancel" (onClick)="toggleAddingNewType()"></p-button>
@@ -22,7 +21,8 @@
                 </ng-template>
                 <ng-template pTemplate="content">
                     <div class="progressGroup">
-                        <input type="text" pInputText placeholder="Enter Capacity" formControlName="Capacity" value="{{animalType?.Capacity}}" />
+                        <input type="text" pInputText placeholder="Enter Capacity" formControlName="Capacity"
+                            value="{{animalType?.Capacity}}" />
                         <h3>Occupancy of {{animalType?.AnimalTypeName}}</h3>
                         <p-progressBar value="0" styleClass="prime-progress"></p-progressBar>
                     </div>
@@ -46,22 +46,24 @@
                             (onClick)="enableDeletingDialog(animalTypes[i].AnimalTypeId)"></p-button>
                         <button *ngIf="isEditing && animalTypes[i].AnimalTypeId==editingId" type="button"
                             class="pi pi-times" (click)="toggleEditing()" id="turnOffButton"></button>
-                        </div>
+                    </div>
                 </ng-template>
                 <ng-template pTemplate="content">
                     <div class="progressGroup">
-                        <input *ngIf="isEditing&&animalTypes[i].AnimalTypeId==editingId" type="text" pInputText value="{{animalType?.Capacity}}" formControlName="Capacity" />
+                        <input *ngIf="isEditing&&animalTypes[i].AnimalTypeId==editingId" type="text" pInputText
+                            value="{{animalType?.Capacity}}" formControlName="Capacity" />
                         <h3>Occupancy of {{animalType.AnimalTypeName}}</h3>
-                        <!-- TODO databing the length of Animals Array in here and do the math  -->
-                        <p-progressBar value="{{calProgressBar(animalType.Animals.length, animalType.Capacity)}}" styleClass="prime-progress"></p-progressBar>
+                        <p-progressBar value="{{calProgressBar(animalType.Animals.length, animalType.Capacity)}}"
+                            styleClass="prime-progress"></p-progressBar>
                     </div>
-                        <p-button label="See Avaliable Animals!" styleClass="avalBtn" (onClick)="routeTo(animalType)"></p-button>
+                    <p-button label="See Avaliable Animals!" styleClass="avalBtn" (onClick)="routeTo(animalType)">
+                    </p-button>
 
                 </ng-template>
 
                 <!-- Dialog on delete button -->
-                <p-dialog [(visible)]="isDeleting && animalTypes[i].AnimalTypeId==deletingId" [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
-                    [style]="{width: '50vw'}">
+                <p-dialog [(visible)]="isDeleting && animalTypes[i].AnimalTypeId==deletingId"
+                    [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '50vw'}">
                     <ng-template pTemplate="header">
                         <h1>Are you sure you want to delete animal type {{animalType.AnimalTypeName}} ?</h1>
                     </ng-template>

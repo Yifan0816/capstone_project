@@ -1,39 +1,34 @@
 div {
-    padding-top: 5%;
+  padding-top: 5%;
 }
 
 ul {
-    background-color: white;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding-left: 0;
-    margin-top: 0;
-
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 0;
+  margin-top: 0;
 }
 
 li {
-    color: black;
-    text-decoration: none;
-    display: inline;
-    padding-right: 1.45em;
-    padding-left: 0.45em;
-    cursor: pointer;
-  }
+  color: black;
+  text-decoration: none;
+  display: inline;
+  padding-right: 1.45em;
+  padding-left: 0.45em;
+  cursor: pointer;
+}
 
-  li:hover {
-    background-color: #D1E2C4;;
-  }
+li:hover {
+  background-color: #d1e2c4;
+}
 
-
-
-  button {
-    /* border: none;
-    background-color: none; */
-    background-color: transparent;
-    background-repeat: no-repeat;
-    border: none;
-    cursor: pointer;
-    overflow: hidden;
-    outline: none;
-  }
+button {
+  background-color: transparent;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  outline: none;
+}

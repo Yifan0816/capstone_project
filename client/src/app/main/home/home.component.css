@@ -1,100 +1,85 @@
 #video-statement {
-    /* background-color: #9de5b1; */
-    background-color: white;
-    width: 100%;
-    display: flex;
-    justify-content: space-around;
-    /* flex-wrap: wrap; */
-    /* flex-direction: row; */
+  background-color: white;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
 }
 
 #pictureGal {
-
-    margin-left: 5em;
-    margin-right: 2em;
-    /* padding-top: 4em;*/
-    padding-left: 4em;
-    padding-bottom: 2em;
-    flex-basis: 60%;
+  margin-left: 5em;
+  margin-right: 2em;
+  padding-left: 4em;
+  padding-bottom: 2em;
+  flex-basis: 60%;
 }
 
 #statement {
-    margin-left: 2em;
-    margin-right: 6em;
-    padding-top: 4em;
-    padding-bottom: 4em;
-    padding-right: 6em;
-    flex-basis: 40%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
+  margin-left: 2em;
+  margin-right: 6em;
+  padding-top: 4em;
+  padding-bottom: 4em;
+  padding-right: 6em;
+  flex-basis: 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
 }
 
 #organizationIcons {
-    /* padding: 2em; */
-    /* background-color: #3d774e; */
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 }
 
-#organizationIcons a  {
-    text-decoration: none;
-    padding-bottom: 2em;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-    flex-basis: 33.33%;
+#organizationIcons a {
+  text-decoration: none;
+  padding-bottom: 2em;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  flex-basis: 33.33%;
 }
 
-
-#organizationIcons p, #organizationIcons h3  {
-
-    color: black;
-    cursor: pointer;
-    padding-left: 2em;
-    padding-right: 2em;
+#organizationIcons p,
+#organizationIcons h3 {
+  color: black;
+  cursor: pointer;
+  padding-left: 2em;
+  padding-right: 2em;
 }
-
 
 :host ::ng-deep .prime-card-override {
-    background-color: #D1E2C4;
-    /* background-color: #b2dbbe; */
-    margin: 1em;
-    width: 30em;
-    height: 30em;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
+  background-color: #d1e2c4;
+  margin: 1em;
+  width: 30em;
+  height: 30em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 
-  :host ::ng-deep .p-card-header {
+:host ::ng-deep .p-card-header {
+  padding: 1em;
+}
 
-      padding: 1em;
+:host ::ng-deep .p-button {
+  background-color: aliceblue;
+  color: var(--green-400);
+  border-color: var(--gray-400);
+  margin-left: 1em;
+}
 
-  }
+:host ::ng-deep .p-card-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-  :host ::ng-deep .p-button {
-      background-color: aliceblue;
-      color: var(--green-400);
-      border-color: var(--gray-400);
-      margin-left: 1em;
-  }
-
-  :host ::ng-deep .p-card-content {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-
-  }
-
-  :host ::ng-deep .p-card-content .progressGroup {
-      display: flex;
-      flex-direction: column;
-
-  }
+:host ::ng-deep .p-card-content .progressGroup {
+  display: flex;
+  flex-direction: column;
+}

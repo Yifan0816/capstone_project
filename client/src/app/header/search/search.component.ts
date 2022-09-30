@@ -18,11 +18,7 @@ export class SearchComponent implements OnInit {
   previousRoute!: any;
   redirectRoute!: any;
 
-  constructor(
-    private groupsService: GroupsService,
-    private router: Router,
-  ) {
-  }
+  constructor(private groupsService: GroupsService, private router: Router) {}
 
   routeTo(animalType: Animaltype) {
     this.router.navigate([
@@ -48,7 +44,7 @@ export class SearchComponent implements OnInit {
       }
     });
     this.searchResult = [...filtered];
-    if(event.target.value==""){
+    if (event.target.value == '') {
       this.searchResult = [];
     }
   }
@@ -57,7 +53,7 @@ export class SearchComponent implements OnInit {
     this.getAllAnimalTypes();
     this.router.events.forEach((event) => {
       if (event instanceof NavigationStart) {
-        this.searchInput = "";
+        this.searchInput = '';
         this.isLeaving = true;
         this.searchResult = [];
       }
@@ -68,7 +64,5 @@ export class SearchComponent implements OnInit {
         this.previousRoute = event.url;
       }
     });
-
-
   }
 }

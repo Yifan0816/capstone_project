@@ -1,10 +1,16 @@
 <nav>
-    <!-- when click, make them to scroll to postition -->
     <ul id="navList">
-        <a routerLink=""><li>Home</li></a>
-        <a href="#organizationIcons"><li>Shelters</li></a>
-        <a [routerLink]="getRoute('allanimaltypes')"><li>All Animal Types</li></a>
-        <a [routerLink]="getRoute('allanimals')"><li>All Animals</li></a>
+        <a routerLink="">
+            <li>Home</li>
+        </a>
+        <a href="#organizationIcons">
+            <li>Shelters</li>
+        </a>
+        <a [routerLink]="getRoute('allanimaltypes')">
+            <li>All Animal Types</li>
+        </a>
+        <a [routerLink]="getRoute('allanimals')">
+            <li>All Animals</li>
+        </a>
     </ul>
-    <!-- <p-breadcrumb [model]="items"></p-breadcrumb> -->
 </nav>

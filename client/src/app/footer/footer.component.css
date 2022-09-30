@@ -1,17 +1,16 @@
 footer {
-    background-color: #d8e1e7;
-    padding: 1em;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
+  background-color: #d8e1e7;
+  padding: 1em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .footer {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    color: white;
-    text-align: center;
-  }
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  color: white;
+  text-align: center;
+}

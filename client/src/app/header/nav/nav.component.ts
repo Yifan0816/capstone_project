@@ -1,40 +1,30 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import {MenuItem} from 'primeng/api';
+import { MenuItem } from 'primeng/api';
 
 @Component({
   selector: 'app-nav',
   templateUrl: './nav.component.html',
-  styleUrls: ['./nav.component.css']
+  styleUrls: ['./nav.component.css'],
 })
 export class NavComponent implements OnInit {
   items!: MenuItem[];
-  constructor() { }
+  constructor() {}
 
   getRoute(route: string): string {
-    switch(route) {
-      case "allanimaltypes": {
-         return `/animaltypes/all`;
-
+    switch (route) {
+      case 'allanimaltypes': {
+        return `/animaltypes/all`;
       }
-      case "allanimals": {
+      case 'allanimals': {
         return `/animals/all`;
-
       }
 
       default: {
-        return "";
+        return '';
       }
-   }
+    }
   }
 
-  ngOnInit(): void {
-  //   this.items = [
-  //     {label:'Home'},
-  //     {label:'Shelter'},
-  //     {label:'Animal Type'},
-  //     {label:'Lionel Messi', url: 'https://en.wikipedia.org/wiki/Lionel_Messi'}
-  // ];
-  }
-
+  ngOnInit(): void {}
 }

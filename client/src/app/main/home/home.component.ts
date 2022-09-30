@@ -8,8 +8,6 @@ import { OrganizationsService } from 'src/app/service/organizations.service';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-  // TODO: return organization page with param.
-  // implement service, pull details of org from jsopn-server
   getRoute(shelterId: number): string {
     return `shelters/${shelterId}`;
   }
@@ -70,21 +68,20 @@ export class HomeComponent implements OnInit {
     },
   ];
 
-  constructor(private orgService: OrganizationsService,    private titleService: Title) {}
+  constructor(
+    private orgService: OrganizationsService,
+    private titleService: Title
+  ) {}
 
   ngOnInit(): void {
-    this.titleService.setTitle("Animal Adoption - Get Your Friend Today!");
+    this.titleService.setTitle('Animal Adoption - Get Your Friend Today!');
     this.allShelters = this.orgService.getAllShelters().subscribe({
       next: (res: any) => {
         this.allShelters = res;
-        console.log(this.allShelters);
       },
       error: (err: any) => {
         this.errorMessage = err;
         console.log((this.errorMessage = err));
-      },
-      complete: () => {
-        console.log(`called getAllOrganizations()`);
       },
     });
   }

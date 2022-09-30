@@ -67,12 +67,10 @@ export class OrganizationsComponent implements OnInit {
   }
 
   toggleEditing(): void {
-    console.log('toggleEditing() called');
     this.isEditing = !this.isEditing;
   }
 
   enableEditingState(animalTypeId: number): void {
-    console.log('editing animal type id: ' + animalTypeId);
     this.toggleEditing();
     this.getAnimalType(animalTypeId);
     this.editingId = animalTypeId;
@@ -98,7 +96,6 @@ export class OrganizationsComponent implements OnInit {
       return;
     }
     this.isEditing = !this.isEditing;
-    console.log('deleteAnimalType() called');
     this.groupService.deleteAnimalTypeById(animalType.AnimalTypeId).subscribe({
       error: (error) => {
         console.log(error);
@@ -135,7 +132,6 @@ export class OrganizationsComponent implements OnInit {
           detail: 'Problem with server!',
         });
       },
-      complete: () => console.log(`getAnimalType() called`),
     });
   }
 
@@ -197,13 +193,12 @@ export class OrganizationsComponent implements OnInit {
     });
   }
 
-updateCapacityValidation(animalType: Animaltype): boolean {
-return animalType.Capacity >= animalType.Animals.length ? true: false;
-}
+  updateCapacityValidation(animalType: Animaltype): boolean {
+    return animalType.Capacity >= animalType.Animals.length ? true : false;
+  }
 
   updateAnimalType(animalType: Animaltype): void {
-
-    if(!this.updateCapacityValidation(animalType)) {
+    if (!this.updateCapacityValidation(animalType)) {
       this.popErrorToast({
         severity: 'error',
         summary: `Cannot Update Animal Type ${animalType.AnimalTypeName}`,
@@ -243,7 +238,6 @@ return animalType.Capacity >= animalType.Animals.length ? true: false;
     this.groupService.getAllAnimalTypesByShelter(this.ShelterId).subscribe({
       next: (res: any) => {
         this.animalTypes = res;
-        console.log(this.animalTypes);
       },
       error: (err: any) => {
         this.errorMessage = err;
@@ -264,7 +258,6 @@ return animalType.Capacity >= animalType.Animals.length ? true: false;
     this.orgService.getShelterById(this.ShelterId).subscribe({
       next: (res: any) => {
         this.shelter = res;
-        console.log(this.shelter);
       },
       error: (err: any) => {
         this.errorMessage = err;
@@ -316,7 +309,6 @@ return animalType.Capacity >= animalType.Animals.length ? true: false;
   popSuccessToast(message: Message) {
     this.messageService.add(message);
   }
-
 
   ngOnInit(): void {
     this.ShelterId = this.activatedRoute.snapshot.paramMap.get('id');

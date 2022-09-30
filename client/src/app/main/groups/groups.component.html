@@ -75,7 +75,8 @@
                 <ng-template pTemplate="header">
                     <h1>Are you sure you want to delete {{animal.AnimalName}} ?</h1>
                 </ng-template>
-                <ng-template pTemplate="content">
+                <ng-template pTemplate="content" id="deletCard">
+                    <img src="../../assets/animals/{{animal.AnimalId}}.png" alt="">
                     <ul>
                         <li>Name: {{animal.AnimalName}}</li>
                         <li>Age: {{animal.Age}}</li>
