@@ -1,22 +1,23 @@
-<div>
+<div id="groupWrapper">
     <section id="animalTypeDetails" *ngIf="!isAnimalTypeLoading">
-        <img src="../assets/shelters/{{ animalType.ShelterId }}.jpg" alt="">
+        <img id="allAnimalPic" src="../assets/shelters/{{ animalType.ShelterId }}.jpg" alt="">
         <h2>{{ animalType.AnimalTypeName}}</h2>
-        <p-button *ngIf="animalType.AnimalTypeId!=0" label="Add New Animal" (onClick)="toggleAddingNewAnimal()"></p-button>
+        <p-button *ngIf="animalType.AnimalTypeId!=0" label="Add New Animal" (onClick)="toggleAddingNewAnimal()">
+        </p-button>
     </section>
     <section id="animalsCards">
         <p-card *ngFor="let animal of animals" styleClass="prime-card-override">
-
             <ng-template pTemplate="content">
-                <img src="https://via.placeholder.com/75" alt="">
-                <ul>
-                    <li>Name: {{animal.AnimalName}}</li>
-                    <li>Age: {{animal.Age}}</li>
-                    <li>Gender: {{animal.Gender}}</li>
-                    <li>Breed: {{animal.Breed}}</li>
-                </ul>
-                <p-button label="See Details!" (onClick)="displayDetails(animal.AnimalId)"></p-button>
-
+                <img src="../../assets/animals/{{animal.AnimalId}}.png" alt="">
+                <div id="cardWrapper">
+                    <ul>
+                        <li>Name: {{animal.AnimalName}}</li>
+                        <li>Age: {{animal.Age}}</li>
+                        <li>Gender: {{animal.Gender}}</li>
+                        <li>Breed: {{animal.Breed}}</li>
+                    </ul>
+                    <p-button label="See Details!" (onClick)="displayDetails(animal.AnimalId)"></p-button>
+                </div>
             </ng-template>
         </p-card>
     </section>
@@ -25,8 +26,8 @@
         <p-sidebar [(visible)]="displayAnimalDetails" position="right" styleClass="p-sidebar-md">
             <div id="sideBarWrapper">
                 <section *ngIf="!isAddNewAnimal" id="detailHeader">
-                    <h2>{{animal?.AnimalName}}</h2>
-                    <img src="https://via.placeholder.com/100" alt="">
+                    <h1>{{animal?.AnimalName}}</h1>
+                    <img src="../../assets/animals/{{animal.AnimalId}}.png" alt="">
 
                 </section>
                 <section id="detailBody">
@@ -34,8 +35,10 @@
                             value="{{animal?.AnimalName}}" formControlName="AnimalName" /></label>
                     <label for="Age">Age: <input type="text" id="Age" pInputText value="{{animal?.Age}}"
                             formControlName="Age" /></label>
-                    <label for="Gender">Gender: <input type="text" id="Gender" pInputText value="{{animal?.Gender}}"
-                            formControlName="Gender" /></label>
+                    <label for="Gender">Gender:
+                        <p-dropdown [options]="genderOptions" formControlName="Gender" optionValue="code"
+                            optionLabel="name"></p-dropdown>
+                    </label>
                     <label for="Breed">Breed: <input type="text" id="Breed" pInputText value="{{animal?.Breed}}"
                             formControlName="Breed" /></label>
                     <label for="Color">Color: <input type="text" id="Color" pInputText value="{{animal?.Color}}"
@@ -46,17 +49,24 @@
                             formControlName="Health" /></label>
                     <label for="Charactor">Charactor: <input type="text" id="Charactor" pInputText
                             value="{{animal?.Charactor}}" formControlName="Charactor" /></label>
-                    <label for="WithCats">WithCats: <input type="text" id="WithCats" pInputText
-                            value="{{animal?.WithCats}}" formControlName="WithCats" /></label>
-                    <label for="WithDogs">WithDogs: <input type="text" id="WithDogs" pInputText
-                            value="{{animal?.WithDogs}}" formControlName="WithDogs" /></label>
-                    <label for="WithChildren">WithChildren: <input type="text" id="WithChildren" pInputText
-                            value="{{animal?.WithChildren}}" formControlName="WithChildren" /></label>
+                    <label for="WithCats">WithCats:
+                        <p-dropdown [options]="booleanOptions" formControlName="WithCats" optionValue="code"
+                            optionLabel="name"></p-dropdown>
+                    </label>
+                    <label for="WithDogs">WithDogs:
+                        <p-dropdown [options]="booleanOptions" formControlName="WithDogs" optionValue="code"
+                            optionLabel="name"></p-dropdown>
+                    </label>
+                    <label for="WithChildren">WithChildren:
+                        <p-dropdown [options]="booleanOptions" formControlName="WithChildren" optionValue="code"
+                            optionLabel="name"></p-dropdown>
+                    </label>
                 </section>
 
                 <section id="detailFooter">
                     <p-button label="Save" (onClick)="submitAnimalForm(animalDetailsForm.value)"></p-button>
-                    <p-button label="Delete" (onClick)="toggleDeletionDialog()"></p-button>
+                    <p-button *ngIf="!isAddNewAnimal" label="Delete" (onClick)="toggleDeletionDialog()"></p-button>
+                    <p-button *ngIf="isAddNewAnimal" label="Cancel" (onClick)="toggleDisplayingDetails()"></p-button>
                 </section>
             </div>
 
@@ -83,3 +93,5 @@
     </form>
 
 </div>
+
+<p-toast position="top-right"></p-toast>

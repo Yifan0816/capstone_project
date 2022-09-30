@@ -12,10 +12,11 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { DropdownModule } from 'primeng/dropdown';
 import { AutoCompleteModule } from 'primeng/autocomplete';
-import { FilterService } from 'primeng/api';
+import { FilterService, MessageService } from 'primeng/api';
 import { ListboxModule } from 'primeng/listbox';
 import { DividerModule } from 'primeng/divider';
 import { GalleriaModule } from 'primeng/galleria';
+import {ToastModule} from 'primeng/toast';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -60,9 +61,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     AutoCompleteModule,
     ListboxModule,
     DividerModule,
-    GalleriaModule
+    GalleriaModule,
+    ToastModule
   ],
-  providers: [FilterService],
+  providers: [FilterService, MessageService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -12,16 +12,19 @@
 
     margin-left: 5em;
     margin-right: 2em;
-    padding-top: 4em;
-    padding-bottom: 4em;
+    /* padding-top: 4em;*/
+    padding-left: 4em;
+    padding-bottom: 2em;
     flex-basis: 60%;
 }
 
 #statement {
     margin-left: 2em;
-    margin-right: 2em;
+    margin-right: 6em;
     padding-top: 4em;
     padding-bottom: 4em;
+    padding-right: 6em;
+    flex-basis: 40%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;

@@ -2,6 +2,10 @@ div {
   display: flex;
   flex-direction: row;
 }
+#allAnimalPic {
+    height: 400px;
+    width: 500px;
+  }
 
 #orgDetails {
   padding-top: 5%;
@@ -14,6 +18,13 @@ div {
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
+}
+
+#GroupCards {
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: space-around;
+    align-items: center;
 }
 
 :host ::ng-deep .prime-card-override {
@@ -64,4 +75,10 @@ h3 {
 
 :host ::ng-deep .hideButton {
     visibility: none;
+}
+
+#turnOffButton {
+    background-color: transparent;
+    border: 0;
+    margin-left: 1em;
 }

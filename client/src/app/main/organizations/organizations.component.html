@@ -2,7 +2,7 @@
     <!-- TODO orgDetails should be sticky, scoll on groupCards only -->
     <!-- TODO need to fix the buttons and progress bar when scrolling(override z-index?), currently they're over the header -->
     <section id="orgDetails" *ngIf="!(isAnimalTypesLoading&&isSheltersLoading)">
-        <img src="../assets/shelters/{{ shelter.ShelterId }}.jpg" alt="">
+        <img id="allAnimalPic" src="../assets/shelters/{{ shelter.ShelterId }}.jpg" alt="">
         <h2>{{ shelter.ShelterName }}</h2>
         <p>{{ shelter.Description }}</p>
         <p-button *ngIf="shelter.ShelterId!=0" label="Add New Animal Type" (onClick)="toggleAddingNewType()"></p-button>
@@ -45,8 +45,8 @@
                         <p-button *ngIf="isEditing && animalTypes[i].AnimalTypeId==editingId" label="Delete"
                             (onClick)="enableDeletingDialog(animalTypes[i].AnimalTypeId)"></p-button>
                         <button *ngIf="isEditing && animalTypes[i].AnimalTypeId==editingId" type="button"
-                            class="pi pi-times" (click)="toggleEditing()"></button>
-                    </div>
+                            class="pi pi-times" (click)="toggleEditing()" id="turnOffButton"></button>
+                        </div>
                 </ng-template>
                 <ng-template pTemplate="content">
                     <div class="progressGroup">
@@ -55,11 +55,6 @@
                         <!-- TODO databing the length of Animals Array in here and do the math  -->
                         <p-progressBar value="{{calProgressBar(animalType.Animals.length, animalType.Capacity)}}" styleClass="prime-progress"></p-progressBar>
                     </div>
-                    <!-- TODO instead of do ngIf, do visibility:none in CSS so it doesn't mess up the card layout -->
-                    <!-- {!IF(isEditing,'hideButton', 'avalBtn')} -->
-                    <!-- interpolation or ternary don't work with styleClass, dunno why -->
-                    <!-- <a [routerLink]="routeTo(animalType.AnimalTypeId)"> -->
-                        <!-- <a (onClick)="routeTo(animalType.AnimalTypeId)"> -->
                         <p-button label="See Avaliable Animals!" styleClass="avalBtn" (onClick)="routeTo(animalType)"></p-button>
 
                 </ng-template>
@@ -77,13 +72,13 @@
                             styleClass="prime-progress"></p-progressBar>
                     </ng-template>
                     <ng-template pTemplate="footer">
-                        <p-button label="Yes" (onClick)="deleteAnimalType(animalType.AnimalTypeId)"></p-button>
+                        <p-button label="Yes" (onClick)="deleteAnimalType(animalType)"></p-button>
                         <p-button label="No" (onClick)="toggleDeletionDialog()"></p-button>
                     </ng-template>
                 </p-dialog>
             </p-card>
         </form>
     </section>
-
-
 </div>
+
+<p-toast position="top-right"></p-toast>

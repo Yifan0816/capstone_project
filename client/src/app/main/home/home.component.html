@@ -8,11 +8,6 @@
             <ng-template pTemplate="item" let-item>
                 <img [src]="item.previewImageSrc" style="width: 100%; display: block;" />
             </ng-template>
-            <!-- <ng-template pTemplate="thumbnail" let-item>
-            <div class="grid grid-nogutter justify-content-center">
-                <img [src]="item.thumbnailImageSrc" style="display: block;" />
-            </div>
-        </ng-template> -->
         </p-galleria>
     </div>
 
@@ -29,9 +24,6 @@
 <section id="organizationIcons">
 
     <a *ngFor="let shelter of allShelters" [routerLink]="getRoute(shelter.ShelterId)">
-        <!-- <h3>{{ shelter.ShelterName }}</h3>
-        <img src="../../assets/shelters/{{ shelter.ShelterId }}.jpg" alt="">
-        <p>{{ shelter.Description}}.</p> -->
         <p-card styleClass="prime-card-override">
             <ng-template pTemplate="header">
                 <h3>{{ shelter.ShelterName }}</h3>

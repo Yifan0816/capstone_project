@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { OrganizationsService } from 'src/app/service/organizations.service';
 
 @Component({
@@ -17,32 +18,26 @@ export class HomeComponent implements OnInit {
   errorMessage!: string;
   images: any[] = [
     {
-      previewImageSrc: '../../assets/homepage/1.jpg',
-      thumbnailImageSrc: '../../assets/homepage/1.jpg',
+      previewImageSrc: '../../assets/homepage/1.png',
+      thumbnailImageSrc: '../../assets/homepage/1.png',
       alt: 'Description for Image 1',
       title: 'Title 1',
     },
     {
-      previewImageSrc: '../../assets/homepage/2.jpg',
-      thumbnailImageSrc: '../../assets/homepage/2.jpg',
+      previewImageSrc: '../../assets/homepage/2.png',
+      thumbnailImageSrc: '../../assets/homepage/2.png',
       alt: 'Description for Image 1',
       title: 'Title 1',
     },
     {
-      previewImageSrc: '../../assets/homepage/3.jpg',
-      thumbnailImageSrc: '../../assets/homepage/3.jpg',
+      previewImageSrc: '../../assets/homepage/3.png',
+      thumbnailImageSrc: '../../assets/homepage/3.png',
       alt: 'Description for Image 1',
       title: 'Title 1',
     },
     {
-      previewImageSrc: '../../assets/homepage/3.jpg',
-      thumbnailImageSrc: '../../assets/homepage/3.jpg',
-      alt: 'Description for Image 1',
-      title: 'Title 1',
-    },
-    {
-      previewImageSrc: '../../assets/homepage/4.jpg',
-      thumbnailImageSrc: '../../assets/homepage/4.jpg',
+      previewImageSrc: '../../assets/homepage/4.png',
+      thumbnailImageSrc: '../../assets/homepage/4.png',
       alt: 'Description for Image 1',
       title: 'Title 1',
     },
@@ -53,8 +48,8 @@ export class HomeComponent implements OnInit {
       title: 'Title 1',
     },
     {
-      previewImageSrc: '../../assets/homepage/6.jpg',
-      thumbnailImageSrc: '../../assets/homepage/6.jpg',
+      previewImageSrc: '../../assets/homepage/6.png',
+      thumbnailImageSrc: '../../assets/homepage/6.png',
       alt: 'Description for Image 1',
       title: 'Title 1',
     },
@@ -75,9 +70,10 @@ export class HomeComponent implements OnInit {
     },
   ];
 
-  constructor(private orgService: OrganizationsService) {}
+  constructor(private orgService: OrganizationsService,    private titleService: Title) {}
 
   ngOnInit(): void {
+    this.titleService.setTitle("Animal Adoption - Get Your Friend Today!");
     this.allShelters = this.orgService.getAllShelters().subscribe({
       next: (res: any) => {
         this.allShelters = res;
