@@ -4,7 +4,9 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 [PrimeNG](https://www.primefaces.org/primeng/setup) components are widely used in this project.
 
-It is the Capstone project built at the end out the Angular Academy course provided by J.B.Hunt and Pluralsight.
+## Brief Introduction
+
+This is the Capstone project built at the end out the Angular Academy course provided by J.B.Hunt and Pluralsight.
 
 The theme of the projecrt is Animal Adoption, it has Shelters as Organizations, Animal Types as Groups, and Animals as Members.
 
@@ -25,3 +27,5 @@ After server is up, go to server folder and run `npm i` then `npm start` to star
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+Contact Yifan @ yifan.zhang@jbhunt.com.
